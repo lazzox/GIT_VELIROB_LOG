@@ -37,10 +37,8 @@ SUBDIRS :=  \
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
-../adc_driver.c \
 ../hardware.c \
 ../interrupt.c \
-../mechanism.c \
 ../port_driver.c \
 ../TC_driver.c \
 ../usart_driver.c \
@@ -54,48 +52,40 @@ ASM_SRCS +=
 
 
 OBJS +=  \
-adc_driver.o \
 hardware.o \
 interrupt.o \
-mechanism.o \
 port_driver.o \
 TC_driver.o \
 usart_driver.o \
 main.o
 
 OBJS_AS_ARGS +=  \
-adc_driver.o \
 hardware.o \
 interrupt.o \
-mechanism.o \
 port_driver.o \
 TC_driver.o \
 usart_driver.o \
 main.o
 
 C_DEPS +=  \
-adc_driver.d \
 hardware.d \
 interrupt.d \
-mechanism.d \
 port_driver.d \
 TC_driver.d \
 usart_driver.d \
 main.d
 
 C_DEPS_AS_ARGS +=  \
-adc_driver.d \
 hardware.d \
 interrupt.d \
-mechanism.d \
 port_driver.d \
 TC_driver.d \
 usart_driver.d \
 main.d
 
-OUTPUT_FILE_PATH +=AXIS_XDRIVE_VELIROB_LOG.elf
+OUTPUT_FILE_PATH +=AXIS_VELIROB_LOG.elf
 
-OUTPUT_FILE_PATH_AS_ARGS +=AXIS_XDRIVE_VELIROB_LOG.elf
+OUTPUT_FILE_PATH_AS_ARGS +=AXIS_VELIROB_LOG.elf
 
 ADDITIONAL_DEPENDENCIES:=
 
@@ -104,10 +94,6 @@ OUTPUT_FILE_DEP:= ./makedep.mk
 LIB_DEP+= 
 
 # AVR32/GNU C Compiler
-
-
-
-
 
 
 
@@ -153,13 +139,13 @@ all: $(OUTPUT_FILE_PATH) $(ADDITIONAL_DEPENDENCIES)
 $(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP) $(LIB_DEP)
 	@echo Building target: $@
 	@echo Invoking: AVR/GNU Linker : 3.4.2
-	$(QUOTE)D:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.2.1002\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -Wl,-Map="AXIS_XDRIVE_VELIROB_LOG.map" -Wl,--start-group -Wl,-lm  -Wl,--end-group -Wl,--gc-sections -mrelax -mmcu=atxmega128a1 
+	$(QUOTE)D:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.2.1002\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -Wl,-Map="AXIS_VELIROB_LOG.map" -Wl,--start-group -Wl,-lm  -Wl,--end-group -Wl,--gc-sections -mrelax -mmcu=atxmega128a1 
 	@echo Finished building target: $@
-	"D:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.2.1002\avr8-gnu-toolchain\bin\avr-objcopy.exe" -O ihex -R .eeprom -R .fuse -R .lock -R .signature  "AXIS_XDRIVE_VELIROB_LOG.elf" "AXIS_XDRIVE_VELIROB_LOG.hex"
-	"D:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.2.1002\avr8-gnu-toolchain\bin\avr-objcopy.exe" -j .eeprom  --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0  --no-change-warnings -O ihex "AXIS_XDRIVE_VELIROB_LOG.elf" "AXIS_XDRIVE_VELIROB_LOG.eep" || exit 0
-	"D:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.2.1002\avr8-gnu-toolchain\bin\avr-objdump.exe" -h -S "AXIS_XDRIVE_VELIROB_LOG.elf" > "AXIS_XDRIVE_VELIROB_LOG.lss"
-	"D:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.2.1002\avr8-gnu-toolchain\bin\avr-objcopy.exe" -O srec -R .eeprom -R .fuse -R .lock -R .signature  "AXIS_XDRIVE_VELIROB_LOG.elf" "AXIS_XDRIVE_VELIROB_LOG.srec"
-	"D:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.2.1002\avr8-gnu-toolchain\bin\avr-size.exe" "AXIS_XDRIVE_VELIROB_LOG.elf"
+	"D:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.2.1002\avr8-gnu-toolchain\bin\avr-objcopy.exe" -O ihex -R .eeprom -R .fuse -R .lock -R .signature  "AXIS_VELIROB_LOG.elf" "AXIS_VELIROB_LOG.hex"
+	"D:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.2.1002\avr8-gnu-toolchain\bin\avr-objcopy.exe" -j .eeprom  --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0  --no-change-warnings -O ihex "AXIS_VELIROB_LOG.elf" "AXIS_VELIROB_LOG.eep" || exit 0
+	"D:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.2.1002\avr8-gnu-toolchain\bin\avr-objdump.exe" -h -S "AXIS_VELIROB_LOG.elf" > "AXIS_VELIROB_LOG.lss"
+	"D:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.2.1002\avr8-gnu-toolchain\bin\avr-objcopy.exe" -O srec -R .eeprom -R .fuse -R .lock -R .signature  "AXIS_VELIROB_LOG.elf" "AXIS_VELIROB_LOG.srec"
+	"D:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.2.1002\avr8-gnu-toolchain\bin\avr-size.exe" "AXIS_VELIROB_LOG.elf"
 	
 	
 
@@ -171,5 +157,5 @@ $(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP) $(LIB_DEP)
 clean:
 	-$(RM) $(OBJS_AS_ARGS) $(EXECUTABLES)  
 	-$(RM) $(C_DEPS_AS_ARGS)   
-	rm -rf "AXIS_XDRIVE_VELIROB_LOG.elf" "AXIS_XDRIVE_VELIROB_LOG.a" "AXIS_XDRIVE_VELIROB_LOG.hex" "AXIS_XDRIVE_VELIROB_LOG.lss" "AXIS_XDRIVE_VELIROB_LOG.eep" "AXIS_XDRIVE_VELIROB_LOG.map" "AXIS_XDRIVE_VELIROB_LOG.srec"
+	rm -rf "AXIS_VELIROB_LOG.elf" "AXIS_VELIROB_LOG.a" "AXIS_VELIROB_LOG.hex" "AXIS_VELIROB_LOG.lss" "AXIS_VELIROB_LOG.eep" "AXIS_VELIROB_LOG.map" "AXIS_VELIROB_LOG.srec"
 	

@@ -16,7 +16,6 @@ Sve
 #include "Headers/avr_compiler.h"
 #include "Headers/usart_driver.h"
 #include "Headers/port_driver.h"
-#include "Headers/adc_driver.h"
 #include "math.h"
 #include "Headers/globals.h"
 #include "Headers/hardware.h"
@@ -27,55 +26,37 @@ int main(void)
 {
 	Podesi_Oscilator();					//podesavanje oscilatora
 	Podesi_Pinove();					//podesavanje I/O pinova
-	//PodesiADC();						//podesavanje AD konvertora
 	Podesi_Tajmere();					//podesavanje tajmera
 	Podesi_Interapt();					//podesavanje interapt prioriteta
 	Podesi_USART_Komunikaciju();		//podesavanje komunikacije
-	_delay_ms(2000);
-// 	sendChar('k');
-	//PORT_SetPins(&PORTK,0xFF);
+	
+	_delay_ms(1500);
+	vreme_primanja = 0;
+	
+	//SendChar('A', &USART_XDRIVE); //0
+	//SendChar('1', &USART_XDRIVE);
+	//SendChar('1', &USART_XDRIVE);
+	//SendChar('1', &USART_XDRIVE);
+	//SendChar('1', &USART_XDRIVE);
+	//SendChar('1', &USART_XDRIVE);
+	//SendChar('1', &USART_XDRIVE);
+	//SendChar('1', &USART_XDRIVE);
+	//SendChar('X', &USART_XDRIVE);
+	//SendChar('a', &USART_LCD);
+	//sendMsg("READY TO REC", &USART_LCD);
+	
+	//sendMsg("A1234567X", &USART_XDRIVE);
+	//sendMsg("A1234567X", &USART_XDRIVE);
 	
 	while(1){
-		//sendChar_USB('L');
-		//sendChar_USB('a');
-		//sendChar_USB('z');
-		//sendChar_USB(0xFF);
-		//sendChar_USB(0xEF);
-		//_delay_ms(3000);	
-	}
-	
-	
-	while(1){
-		//sendChar_USB(0xFF);		
-		//sendChar('k');
-		//sendChar('k');
-		//sendChar('k');
-   		if (sima==1)
-   		{
-	   		_delay_ms(5000);
-	   		sendChar(0xEF);
-			   sima=0;
-	   		
-   		}
-		//PORT_SetPins(&PORTC, 0xFF);
-		
-		char s=1;
-		
-		_delay_ms(500);
-		if (s==1)
-		{
-			PORT_SetPins(&PORTK,0xFF);
-			s=0;
+		if (vreme_primanja > 200){
+			vreme_primanja = 0;
+			RX_i_E1 = 0;
 		}
-		
-		_delay_ms(500);
-		
-		if (s==0)
-		{
-			PORT_ClearPins(&PORTK,0xFF);
-			s=1;
+	
+		if(okay_flag == 1){
+			sendMsg("OKAY", &USART_LCD);
+			okay_flag = 2;
 		}
-		
-		
 	}
 }//main

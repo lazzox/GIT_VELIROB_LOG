@@ -252,23 +252,24 @@ uint16_t USART_NineBits_GetChar(USART_t * usart)
 	}
 }
 
+/*  Send Char over USART example:
+*	SendChar('k',&USART_LCD);
+*	SendChar('k',&USART_XDRIVE)
+*/
+void SendChar(char c, USART_t * USART){
+	USART->DATA = c;
+	while(!(USART->STATUS & (1 << 5)));
+}
 
-void sendMsg(char *poruka)
+/*	Send array of chars, over E1 USART when
+*	sending type it like example: 
+*	sendMsg("text of your message");
+ */
+void sendMsg(char *poruka, USART_t * usartic)
 {
 	while(*poruka != '\0'){
-		sendChar(*poruka);
+		SendChar(*poruka,usartic);
+		//sendChar(*poruka);
 		poruka++;
 	}
-}
-
-void sendChar(char c)
-{
-	USARTE1.DATA = c;
-	while(!(USARTE1.STATUS & (1 << 5)));
-}
-
-void sendChar_USB(char c)
-{
-	USARTC0.DATA = c;
-	while(!(USARTC0.STATUS & (1 << 5)));
 }

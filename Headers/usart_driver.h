@@ -245,9 +245,22 @@ void USART_DataRegEmpty(USART_data_t * usart_data);
 void USART_NineBits_PutChar(USART_t * usart, uint16_t data);
 uint16_t USART_NineBits_GetChar(USART_t * usart);
 
-// My functions
-void sendMsg(char *poruka);
-void sendChar(char c);
-void sendChar_USB(char c);
+//promenljive
+volatile unsigned char
+sendArray[128],
+receiveArray[128],
+vreme_primanja,
+okay_flag,
+RX_i_E0,
+RX_i_E1,
+RX_i_C0;
 
+// My functions
+//void sendMsg(char *poruka, USART_t * usart);
+//void sendChar(char c, USART_t * usart);
+//
+
+void SendChar(char c, USART_t * USART);
+void sendMsg(char *poruka, USART_t * usartic);
+	
 #endif

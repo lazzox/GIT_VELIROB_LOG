@@ -13,7 +13,7 @@
     <OutputFileExtension>.elf</OutputFileExtension>
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
     <AssemblyName>XDRIVE_TIKVIC_V2.0</AssemblyName>
-    <Name>AXIS_XDRIVE_VELIROB_LOG</Name>
+    <Name>AXIS_VELIROB_LOG</Name>
     <RootNamespace>XDRIVE_TIKVIC_V2.0</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
@@ -94,17 +94,11 @@
         <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
       </AvrGcc>
     </ToolchainSettings>
-    <OutputFileName>AXIS_XDRIVE_VELIROB_LOG</OutputFileName>
+    <OutputFileName>AXIS_VELIROB_LOG</OutputFileName>
     <OutputFileExtension>.elf</OutputFileExtension>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="adc_driver.c">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="hardware.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Headers\adc_driver.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Headers\avr_compiler.h">
@@ -114,9 +108,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Headers\hardware.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Headers\mechanism.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Headers\port_driver.h">
@@ -129,9 +120,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="interrupt.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="mechanism.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="port_driver.c">

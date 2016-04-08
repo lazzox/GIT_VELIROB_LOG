@@ -277,14 +277,14 @@ void sendMsg(char *poruka, USART_t * usartic)
 void idi_pravo(unsigned int x, unsigned int y, unsigned int ugao){
 	
 	
-	//SendChar('A',&USART_XDRIVE);
-	//SendChar((char)(x>>8),&USART_XDRIVE);
-	//SendChar((char)x,&USART_XDRIVE);
-	//SendChar((char)(y>>8),&USART_XDRIVE);
-	//SendChar((char)y,&USART_XDRIVE);
-	//SendChar((char)(ugao>>8),&USART_XDRIVE);
-	//SendChar((char)ugao,&USART_XDRIVE);
-	//SendChar('X',&USART_XDRIVE);
+	SendChar('A',&USART_XDRIVE);
+	SendChar((x>>8),&USART_XDRIVE);
+	SendChar(x,&USART_XDRIVE);
+	SendChar((y>>8),&USART_XDRIVE);
+	SendChar(y,&USART_XDRIVE);
+	SendChar((ugao>>8),&USART_XDRIVE);
+	SendChar(ugao,&USART_XDRIVE);
+	SendChar('X',&USART_XDRIVE);
 	//
 	//
 	//SendChar((char)(x>>8),&USART_XM);
@@ -294,22 +294,22 @@ void idi_pravo(unsigned int x, unsigned int y, unsigned int ugao){
 	//SendChar((char)(ugao>>8),&USART_XM);
 	//SendChar((char)ugao,&USART_XM);
 	
-	SendChar('A',&USART_XDRIVE); //0
-	SendChar('1',&USART_XDRIVE);
-	SendChar('2',&USART_XDRIVE);
-	SendChar('3',&USART_XDRIVE);
-	SendChar('4',&USART_XDRIVE);
-	SendChar('5',&USART_XDRIVE);
-	SendChar('6',&USART_XDRIVE);
-	SendChar('X',&USART_XDRIVE);
+	//SendChar('A',&USART_XDRIVE); //0
+	//SendChar('1',&USART_XDRIVE);
+	//SendChar('2',&USART_XDRIVE);
+	//SendChar('3',&USART_XDRIVE);
+	//SendChar('4',&USART_XDRIVE);
+	//SendChar('5',&USART_XDRIVE);
+	//SendChar('6',&USART_XDRIVE);
+	//SendChar('X',&USART_XDRIVE);
 	
 	SendChar('A',&USART_XM); //0
-	SendChar('1',&USART_XM);
-	SendChar('2',&USART_XM);
-	SendChar('3',&USART_XM);
-	SendChar('4',&USART_XM);
-	SendChar('5',&USART_XM);
-	SendChar('6',&USART_XM);
+	SendChar(x>>8,&USART_XM);
+	SendChar(x,&USART_XM);
+	SendChar(y>>8,&USART_XM);
+	SendChar(y,&USART_XM);
+	SendChar(ugao>>8,&USART_XM);
+	SendChar(ugao,&USART_XM);
 	SendChar('X',&USART_XM);
 
 }

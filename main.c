@@ -47,7 +47,7 @@ int main(void)
 	
 	//sendMsg("A1234567X", &USART_XDRIVE);
 	//sendMsg("A1234567X", &USART_XDRIVE);
-	idi_pravo(500,0,0);
+	idi_pravo(300,0,90);
 	
 	while(1){
 		if (vreme_primanja > 200){

@@ -45,7 +45,6 @@ ISR(USARTC0_DRE_vect)
 
 ISR(USARTE1_RXC_vect)
 {
-	SendChar('x', &USART_XM);
 	USART_RXComplete(&USART_E1_data);
 	receiveArray[RX_i_E1] = USART_RXBuffer_GetByte(&USART_E1_data);
 	RX_i_E1++;
@@ -77,7 +76,7 @@ ISR(USARTE1_RXC_vect)
 				break;
 				
 			case 'O':
-			SendChar('o', &USART_XM);
+			//SendChar('o', &USART_XM);
 				okay_flag = 1;
 				RX_i_E1 =0;	
 				break;

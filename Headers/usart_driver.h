@@ -262,5 +262,6 @@ RX_i_C0;
 
 void SendChar(char c, USART_t * USART);
 void sendMsg(char *poruka, USART_t * usartic);
+void idi_pravo(unsigned int x, unsigned int y, unsigned int ugao);
 	
 #endif

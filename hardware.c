@@ -62,7 +62,7 @@ void Podesi_USART_Komunikaciju(void)
 	USART_InterruptDriver_Initialize(&USART_E1_data, &USARTE1, USART_DREINTLVL_LO_gc); 	//Koriscenje USARTE1 (definisano u globals.h) i inicijalizacija buffer-a
 	USART_Format_Set(USART_E1_data.usart, USART_CHSIZE_8BIT_gc, USART_PMODE_DISABLED_gc, false);//USARTE1, 8 Data bits, No Parity, 1 Stop bit.
 	USART_RxdInterruptLevel_Set(USART_E1_data.usart, USART_RXCINTLVL_LO_gc);//Aktiviranje RXC interrupt-a
-	USART_Baudrate_Set(&USARTE1,12,1 ); //Podesavanje Baud rate	//192900
+	USART_Baudrate_Set(&USARTE1,107,-5); //Podesavanje Baud rate	//192900
 	USART_Rx_Enable(USART_E1_data.usart);	//Ukljucivanje RX i TX
 	USART_Tx_Enable(USART_E1_data.usart);
 	

@@ -31,7 +31,7 @@ okay_flag,
 RX_i_E0,
 RX_i_E1,
 RX_i_C0,
-
+stigao_flag,
 
 //KOMUNIKACIJA
 adresa_long,
@@ -39,5 +39,8 @@ vrednost_prom,
 adresa_niz_1,
 adresa_niz_2,
 adresa_niz_3;
+
+extern volatile unsigned int
+sys_time;
 							
 #endif /* GLOBALS_H_ */

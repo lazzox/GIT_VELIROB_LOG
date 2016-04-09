@@ -40,6 +40,7 @@ C_SRCS +=  \
 ../hardware.c \
 ../interrupt.c \
 ../port_driver.c \
+../taktike.c \
 ../TC_driver.c \
 ../usart_driver.c \
 ../main.c
@@ -55,6 +56,7 @@ OBJS +=  \
 hardware.o \
 interrupt.o \
 port_driver.o \
+taktike.o \
 TC_driver.o \
 usart_driver.o \
 main.o
@@ -63,6 +65,7 @@ OBJS_AS_ARGS +=  \
 hardware.o \
 interrupt.o \
 port_driver.o \
+taktike.o \
 TC_driver.o \
 usart_driver.o \
 main.o
@@ -71,6 +74,7 @@ C_DEPS +=  \
 hardware.d \
 interrupt.d \
 port_driver.d \
+taktike.d \
 TC_driver.d \
 usart_driver.d \
 main.d
@@ -79,6 +83,7 @@ C_DEPS_AS_ARGS +=  \
 hardware.d \
 interrupt.d \
 port_driver.d \
+taktike.d \
 TC_driver.d \
 usart_driver.d \
 main.d
@@ -94,6 +99,8 @@ OUTPUT_FILE_DEP:= ./makedep.mk
 LIB_DEP+= 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

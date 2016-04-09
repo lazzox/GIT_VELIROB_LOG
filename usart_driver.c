@@ -274,7 +274,7 @@ void sendMsg(char *poruka, USART_t * usartic)
 	}
 }
 
-void idi_pravo(unsigned int x, unsigned int y, unsigned int ugao){
+void idi_pravo_HC(unsigned int x, unsigned int y, unsigned int ugao){
 	
 	
 	SendChar('A',&USART_XDRIVE);

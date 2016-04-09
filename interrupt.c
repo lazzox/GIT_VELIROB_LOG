@@ -19,6 +19,7 @@
 ISR(TCE1_OVF_vect)	//1.5ms 
 {	
 	vreme_primanja++;
+	sys_time++;
 }
 
 ISR(TCF0_CCA_vect)
@@ -47,10 +48,12 @@ ISR(USARTE1_RXC_vect)
 {
 	USART_RXComplete(&USART_E1_data);
 	receiveArray[RX_i_E1] = USART_RXBuffer_GetByte(&USART_E1_data);
+	SendChar(receiveArray[RX_i_E1], &USART_XM);
 	RX_i_E1++;
 	vreme_primanja = 0;
 	
-	if(RX_i_E1 > 0){ //Primljeni podaci i spremni za obradu
+	
+	if(RX_i_E1 > 7){ //Primljeni podaci i spremni za obradu
 		switch(receiveArray[0]){
 			case 'A':
 				if(receiveArray[8] == 'X'){ //idi u tacku primljeno!
@@ -75,13 +78,20 @@ ISR(USARTE1_RXC_vect)
 				}
 				break;
 				
-			case 'O':
-			//SendChar('o', &USART_XM);
-				okay_flag = 1;
-				RX_i_E1 =0;	
+			case 'O': //O - OKAY FLAG (PRIMIO SAM PORUKU) 
+				if(receiveArray[7] == 'K'){
+					okay_flag = 1;
+					RX_i_E1 =0;	
+				}
 				break;
-			
-			
+				
+			case 'S': //TU - Kao TU SAM (STIGAO SAM)
+				if(receiveArray[7] == 'T'){
+					stigao_flag = 1;
+					RX_i_E1 = 0;
+				}
+				break;
+				
 			default:
 				break;
 			

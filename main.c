@@ -16,10 +16,9 @@ Sve
 #include "Headers/avr_compiler.h"
 #include "Headers/usart_driver.h"
 #include "Headers/port_driver.h"
-#include "math.h"
 #include "Headers/globals.h"
 #include "Headers/hardware.h"
-#include "Headers/funkcije.h"
+#include "Headers/taktike.h"
 
 
 int main(void)
@@ -32,32 +31,22 @@ int main(void)
 	
 	_delay_ms(1500);
 	vreme_primanja = 0;
+
+	//idi_pravo(300,0,90);
 	
-	//SendChar('A', &USART_XDRIVE); //0
-	//SendChar('1', &USART_XDRIVE);
-	//SendChar('1', &USART_XDRIVE);
-	//SendChar('1', &USART_XDRIVE);
-	//SendChar('1', &USART_XDRIVE);
-	//SendChar('1', &USART_XDRIVE);
-	//SendChar('1', &USART_XDRIVE);
-	//SendChar('1', &USART_XDRIVE);
-	//SendChar('X', &USART_XDRIVE);
-	//SendChar('a', &USART_LCD);
-	//sendMsg("READY TO REC", &USART_LCD);
-	
-	//sendMsg("A1234567X", &USART_XDRIVE);
-	//sendMsg("A1234567X", &USART_XDRIVE);
-	idi_pravo(300,0,90);
 	
 	while(1){
-		if (vreme_primanja > 200){
+		if (vreme_primanja > 500){
 			vreme_primanja = 0;
 			RX_i_E1 = 0;
 		}
 	
-		if(okay_flag == 1){
-			sendMsg("OKAY", &USART_LCD);
-			okay_flag = 2;
-		}
+	
+		taktika_1();
+	//
+		//if(okay_flag == 1){
+			//sendMsg("OKAY", &USART_LCD);
+			//okay_flag = 2;
+		//}
 	}
 }//main

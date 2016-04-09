@@ -251,9 +251,13 @@ sendArray[128],
 receiveArray[128],
 vreme_primanja,
 okay_flag,
+stigao_flag,
 RX_i_E0,
 RX_i_E1,
 RX_i_C0;
+
+volatile unsigned int 
+sys_time;
 
 // My functions
 //void sendMsg(char *poruka, USART_t * usart);
@@ -262,6 +266,6 @@ RX_i_C0;
 
 void SendChar(char c, USART_t * USART);
 void sendMsg(char *poruka, USART_t * usartic);
-void idi_pravo(unsigned int x, unsigned int y, unsigned int ugao);
+void idi_pravo_HC(unsigned int x, unsigned int y, unsigned int ugao);
 	
 #endif

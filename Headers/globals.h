@@ -19,19 +19,17 @@ USART_data_t USART_E1_data;
 USART_data_t USART_C0_data; 
 USART_data_t USART_D1_data;
 
-
-
 ///////////////////////////Globalne promenljive///////////////////////
 extern volatile unsigned char
 //komunikacija
 sendArray[128],
 receiveArray[128],
-vreme_primanja,
 okay_flag,
 RX_i_E0,
 RX_i_E1,
 RX_i_C0,
 stigao_flag,
+stigao_flag2,
 
 //KOMUNIKACIJA
 adresa_long,
@@ -41,6 +39,11 @@ adresa_niz_2,
 adresa_niz_3;
 
 extern volatile unsigned int
-sys_time;
+vreme_primanja,
+overflow_primanje,
+sys_time,
+TIMED_OUT_VREME,
+korak,
+korak2;
 							
 #endif /* GLOBALS_H_ */

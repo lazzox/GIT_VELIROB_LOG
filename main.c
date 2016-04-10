@@ -33,10 +33,16 @@ int main(void)
 	vreme_primanja = 0;
 
 	//idi_pravo(300,0,90);
+	sendMsg("UUU", &USART_XM);
+	RX_i_E1 = 0;
 	
+	TIMED_OUT_VREME = 200;
+	korak = 0;
+	korak2 = 0;
+	stigao_flag2 =0;
 	
 	while(1){
-		if (vreme_primanja > 500){
+		if (vreme_primanja > 100){
 			vreme_primanja = 0;
 			RX_i_E1 = 0;
 		}

@@ -18,6 +18,7 @@
 //interrupt tajmera
 ISR(TCE1_OVF_vect)	//1.5ms 
 {	
+	overflow_primanje++;
 	vreme_primanja++;
 	sys_time++;
 }
@@ -48,31 +49,16 @@ ISR(USARTE1_RXC_vect)
 {
 	USART_RXComplete(&USART_E1_data);
 	receiveArray[RX_i_E1] = USART_RXBuffer_GetByte(&USART_E1_data);
-	SendChar(receiveArray[RX_i_E1], &USART_XM);
+	//SendChar((char)RX_i_E1,&USART_XM);
+	//SendChar(receiveArray[RX_i_E1], &USART_XM);
 	RX_i_E1++;
 	vreme_primanja = 0;
 	
 	
 	if(RX_i_E1 > 7){ //Primljeni podaci i spremni za obradu
 		switch(receiveArray[0]){
-			case 'A':
-				if(receiveArray[8] == 'X'){ //idi u tacku primljeno!
-					//parsiraj ovde sve
-					SendChar(receiveArray[1],&USART_LCD);
-					SendChar(receiveArray[2],&USART_LCD);
-					SendChar(receiveArray[3],&USART_LCD);
-					SendChar(receiveArray[4],&USART_LCD);
-					SendChar(receiveArray[5],&USART_LCD);
-					SendChar(receiveArray[6],&USART_LCD);
-					SendChar(receiveArray[7],&USART_LCD);
-					//parsiraj ovde sve
-					RX_i_E1 = 0;
-				}
-			break;
-			
-			
 			case 'I':
-				if(receiveArray[5] == 'D'){
+				if(receiveArray[7] == 'D'){
 					//parsiraj ovde sve
 					RX_i_E1 = 0;
 				}
@@ -80,6 +66,7 @@ ISR(USARTE1_RXC_vect)
 				
 			case 'O': //O - OKAY FLAG (PRIMIO SAM PORUKU) 
 				if(receiveArray[7] == 'K'){
+					//SendChar('Y', &USART_XM);
 					okay_flag = 1;
 					RX_i_E1 =0;	
 				}
@@ -89,6 +76,7 @@ ISR(USARTE1_RXC_vect)
 				if(receiveArray[7] == 'T'){
 					stigao_flag = 1;
 					RX_i_E1 = 0;
+					SendChar('X', &USART_XM);
 				}
 				break;
 				

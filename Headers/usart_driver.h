@@ -249,15 +249,20 @@ uint16_t USART_NineBits_GetChar(USART_t * usart);
 volatile unsigned char
 sendArray[128],
 receiveArray[128],
-vreme_primanja,
 okay_flag,
 stigao_flag,
+stigao_flag2,
 RX_i_E0,
 RX_i_E1,
 RX_i_C0;
 
 volatile unsigned int 
-sys_time;
+vreme_primanja,
+overflow_primanje,
+sys_time,
+TIMED_OUT_VREME,
+korak,
+korak2;
 
 // My functions
 //void sendMsg(char *poruka, USART_t * usart);

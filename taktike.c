@@ -14,15 +14,11 @@
 #include "Headers/usart_driver.h"
 
 
-volatile char poslata_komanda = 0;
-volatile int korak = 0;
-volatile int korak2 = 0;
-volatile unsigned int TIMED_OUT_VREME = 200;
-
-int idi_pravo(unsigned int x, unsigned int y, unsigned int ugao)
+void idi_pravo(unsigned int x, unsigned int y, unsigned int ugao)
 {
 	switch(korak2){
 		case 0:
+		sendMsg("saljem", &USART_XM);
 			SendChar('A',&USART_XDRIVE);
 			SendChar((x>>8),&USART_XDRIVE);
 			SendChar(x,&USART_XDRIVE);
@@ -31,78 +27,86 @@ int idi_pravo(unsigned int x, unsigned int y, unsigned int ugao)
 			SendChar((ugao>>8),&USART_XDRIVE);
 			SendChar(ugao,&USART_XDRIVE);
 			SendChar('X',&USART_XDRIVE);
-									
-			//TIMED_OUT_VREME += sys_time;
-			//poslata_komanda = 1;
-			//vreme_primanja = 0; //resetuj vreme primanja
+				SendChar('A',&USART_XM);
+				SendChar((x>>8),&USART_XM);
+				SendChar(x,&USART_XM);
+				SendChar((y>>8),&USART_XM);
+				SendChar(y,&USART_XM);
+				SendChar((ugao>>8),&USART_XM);
+				SendChar(ugao,&USART_XM);
+				SendChar('X',&USART_XM);
+			overflow_primanje = 0;
 			korak2++;
-			break;
+		break;
+		
 		case 1:
-			SendChar('L', &USART_XM);
-				if (okay_flag){
-					SendChar('A', &USART_XM);
-					korak2++;
-					okay_flag = 0;
-				}
-			break;
+			if(okay_flag){
+				sendMsg("okey",&USART_XM);
+				korak2 = 2;
+				okay_flag = 0;
+				overflow_primanje = 0;
+			}
+			else if(overflow_primanje > 200)
+			{
+				korak2 = 0;
+				sendMsg("OVERFLOW",&USART_XM);
+			}
+		
+		break;
 		
 		case 2:
-				SendChar('J', &USART_XM);
-				if(stigao_flag) //Uspesno poslao komandu robot ide po komandi
-				{
-					SendChar('O', &USART_XM);
-					//poslata_komanda = 1; //resetuje flag
-					stigao_flag = 0;
-					korak2 = 0;
-					return 1;
-				}
+			if(stigao_flag){
+				sendMsg("stigao",&USART_XM);
+				stigao_flag = 0;
+				korak2++;
+			}	
+		break;
+		
+		default:
 			break;
-		default: 
-			return 0;
-			break;
-		}//switch
+	}
 }
 
-int idi_nazad(unsigned int x, unsigned int y, unsigned int ugao)
-{
+void idi_nazad(unsigned int x, unsigned int y, unsigned int ugao)
+{	
 	switch(korak2){
 		case 0:
-		SendChar('B',&USART_XDRIVE);
-		SendChar((x>>8),&USART_XDRIVE);
-		SendChar(x,&USART_XDRIVE);
-		SendChar((y>>8),&USART_XDRIVE);
-		SendChar(y,&USART_XDRIVE);
-		SendChar((ugao>>8),&USART_XDRIVE);
-		SendChar(ugao,&USART_XDRIVE);
-		SendChar('X',&USART_XDRIVE);
-		
-		//TIMED_OUT_VREME += sys_time;
-		//poslata_komanda = 1;
-		//vreme_primanja = 0; //resetuj vreme primanja
-		korak2++;
-		break;
-		case 1:
-		if (okay_flag){
+			SendChar('B',&USART_XDRIVE);
+			SendChar((x>>8),&USART_XDRIVE);
+			SendChar(x,&USART_XDRIVE);
+			SendChar((y>>8),&USART_XDRIVE);
+			SendChar(y,&USART_XDRIVE);
+			SendChar((ugao>>8),&USART_XDRIVE);
+			SendChar(ugao,&USART_XDRIVE);
+			SendChar('X',&USART_XDRIVE);
+			overflow_primanje = 0;
 			korak2++;
-			okay_flag = 0;
-		}
 		break;
 		
+		case 1:
+			if(okay_flag){
+				korak2 = 2;
+				okay_flag = 0;
+				overflow_primanje = 0;
+			}
+			else if(overflow_primanje > 200)
+			{
+				korak2 = 0;
+				sendMsg("OVERFLOW",&USART_XM);
+				
+			}
+		break;
+			
 		case 2:
-		if(stigao_flag) //Uspesno poslao komandu robot ide po komandi
-		{
-			//poslata_komanda = 1; //resetuje flag
-			stigao_flag = 0;
-			korak2 = 0;
-			return 1;
-		}
+			if(stigao_flag){
+				stigao_flag = 0;
+				korak2++;
+			}
 		break;
+		
 		default:
-		return 0;
 		break;
-	}//switch
-	
-	return 0;
+	}
 }
 
 void taktika_1(void)
@@ -110,26 +114,29 @@ void taktika_1(void)
 	switch (korak)
 	{
 		case 0:
-			//SendChar('0', &USART_XM);
-			//SendChar('0', &USART_XM);
-			if(idi_pravo(500,0,0)) 
+			idi_pravo(500,0,0);
+			if (korak2 == 3)
 			{
-				
 				korak++;
-				
+				korak2 = 0;
+			}
+			
+		
+		case 1:
+			idi_nazad(0,0,0);
+			if(korak2==3)
+			{
+					korak++;
+					korak2 = 0;
 			}
 		break;
 		
-		case 1:
-			//SendChar('1', &USART_XM);
-			if(idi_nazad(0,0,0)) 
-			{
-				korak++;
-				SendChar('Z', &USART_XM);
-			}
+		case 2:
+			sendMsg("Zavrsio sam", &USART_XM);
+			//korak++;
 		break;
 		
 		default:
-			break;
+		break;
 	}
 }

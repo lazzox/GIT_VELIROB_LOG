@@ -10,8 +10,8 @@
 
 
 
-int idi_pravo(unsigned int x, unsigned int y, unsigned int ugao);
-int idi_nazad(unsigned int x, unsigned int y, unsigned int ugao);
+void idi_pravo(unsigned int x, unsigned int y, unsigned int ugao);
+void idi_nazad(unsigned int x, unsigned int y, unsigned int ugao);
 void taktika_1(void);
 
 

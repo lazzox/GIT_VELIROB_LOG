@@ -12,6 +12,8 @@
 
 void idi_pravo(unsigned int x, unsigned int y, unsigned int ugao);
 void idi_nazad(unsigned int x, unsigned int y, unsigned int ugao);
+
+void taktika_kocka(void);
 void taktika_1(void);
 
 

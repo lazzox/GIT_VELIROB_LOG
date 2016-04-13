@@ -30,6 +30,7 @@ int main(void)
 	Podesi_USART_Komunikaciju();		//podesavanje komunikacije
 	
 	_delay_ms(1500);
+	tajmer=0;
 	vreme_primanja = 0;
 
 	//idi_pravo(300,0,90);
@@ -48,7 +49,7 @@ int main(void)
 		}
 	
 	
-		taktika_1();
+		taktika_kocka();
 	//
 		//if(okay_flag == 1){
 			//sendMsg("OKAY", &USART_LCD);

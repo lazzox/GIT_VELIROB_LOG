@@ -18,7 +18,6 @@ void idi_pravo(unsigned int x, unsigned int y, unsigned int ugao)
 {
 	switch(korak2){
 		case 0:
-		sendMsg("saljem", &USART_XM);
 			SendChar('A',&USART_XDRIVE);
 			SendChar((x>>8),&USART_XDRIVE);
 			SendChar(x,&USART_XDRIVE);
@@ -27,14 +26,6 @@ void idi_pravo(unsigned int x, unsigned int y, unsigned int ugao)
 			SendChar((ugao>>8),&USART_XDRIVE);
 			SendChar(ugao,&USART_XDRIVE);
 			SendChar('X',&USART_XDRIVE);
-				SendChar('A',&USART_XM);
-				SendChar((x>>8),&USART_XM);
-				SendChar(x,&USART_XM);
-				SendChar((y>>8),&USART_XM);
-				SendChar(y,&USART_XM);
-				SendChar((ugao>>8),&USART_XM);
-				SendChar(ugao,&USART_XM);
-				SendChar('X',&USART_XM);
 			overflow_primanje = 0;
 			korak2++;
 		break;
@@ -109,6 +100,71 @@ void idi_nazad(unsigned int x, unsigned int y, unsigned int ugao)
 	}
 }
 
+
+
+void taktika_kocka(void){
+		switch (korak)
+		{
+			case 0:
+				idi_pravo(500,0,90);
+				if (korak2 == 3)
+				{
+					sendMsg('korak++', &USART_XM);
+					korak++;
+					korak2 = 0;
+				}
+			break;
+			
+			case 1:
+				idi_pravo(500,500,180);
+				if (korak2 == 3)
+				{
+					sendMsg('korak++', &USART_XM);
+					korak=2;
+					korak2 = 0;
+					
+				}
+			break;
+			
+			case 2:
+				idi_nazad(1300,500,180);
+				if (korak2 == 3)
+				{
+					sendMsg('korak++', &USART_XM);
+					korak=3;
+					korak2 = 0;
+				}
+			
+			break;
+			
+			case 3:
+				idi_pravo(0,500,0);
+				if (korak2 == 3)
+				{
+					sendMsg('korak++', &USART_XM);
+					korak=4;
+					korak2 = 0;
+				}
+			
+			break;
+			
+			case 4:
+				idi_pravo(1000,0,0);
+				if (korak2 == 3)
+				{
+					sendMsg('korak++', &USART_XM);
+					korak=5;
+					korak2 = 0;
+				}
+			break;
+			
+			
+			
+			default:
+			break;
+		}
+}
+
 void taktika_1(void)
 {
 	switch (korak)
@@ -120,7 +176,7 @@ void taktika_1(void)
 				korak++;
 				korak2 = 0;
 			}
-			
+		break;
 		
 		case 1:
 			idi_nazad(0,0,0);

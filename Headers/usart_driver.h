@@ -260,6 +260,7 @@ volatile unsigned int
 vreme_primanja,
 overflow_primanje,
 sys_time,
+tajmer,
 TIMED_OUT_VREME,
 korak,
 korak2;

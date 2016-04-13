@@ -21,6 +21,7 @@ ISR(TCE1_OVF_vect)	//1.5ms
 	overflow_primanje++;
 	vreme_primanja++;
 	sys_time++;
+	tajmer++;
 }
 
 //ISR(USARTE1_DRE_vect)
@@ -62,7 +63,7 @@ ISR(USARTE1_RXC_vect)
 				
 			case 'O': //O - OKAY FLAG (PRIMIO SAM PORUKU) 
 				if(receiveArray[7] == 'K'){
-					//SendChar('Y', &USART_XM);
+					sendMsg("OKAY", &USART_XM);
 					okay_flag = 1;
 					RX_i_E1 =0;	
 				}
@@ -72,7 +73,7 @@ ISR(USARTE1_RXC_vect)
 				if(receiveArray[7] == 'T'){
 					stigao_flag = 1;
 					RX_i_E1 = 0;
-					SendChar('X', &USART_XM);
+					sendMsg("STIGAO", &USART_XM);
 				}
 				break;
 				

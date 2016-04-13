@@ -265,11 +265,6 @@ TIMED_OUT_VREME,
 korak,
 korak2;
 
-// My functions
-//void sendMsg(char *poruka, USART_t * usart);
-//void sendChar(char c, USART_t * usart);
-//
-
 void SendChar(char c, USART_t * USART);
 void sendMsg(char *poruka, USART_t * usartic);
 void idi_pravo_HC(unsigned int x, unsigned int y, unsigned int ugao);

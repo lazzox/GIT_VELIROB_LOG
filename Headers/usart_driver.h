@@ -14,6 +14,10 @@
 //  Transmit buffer mask. 
 #define USART_TX_BUFFER_MASK ( USART_TX_BUFFER_SIZE - 1 )
 
+//Dodao ovde da ne menjam i0128a1
+#define USART_XM    (*(USART_t *) 0x08A0)  /*xMega */
+#define USART_XDRIVE    (*(USART_t *) 0x0AB0)  /* Universal Asynchronous Receiver-Transmitter E1 */
+
 
 #if ( USART_RX_BUFFER_SIZE & USART_RX_BUFFER_MASK )
 #error RX buffer size is not a power of 2

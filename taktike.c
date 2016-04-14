@@ -39,6 +39,7 @@ void idi_pravo(unsigned int x, unsigned int y, unsigned int ugao)
 			}
 			else if(overflow_primanje > 200)
 			{
+				overflow_primanje = 0;
 				korak2 = 0;
 				sendMsg("OVERFLOW",&USART_XM);
 			}
@@ -52,6 +53,8 @@ void idi_pravo(unsigned int x, unsigned int y, unsigned int ugao)
 				korak2++;
 			}	
 		break;
+		
+		
 		
 		default:
 			break;
@@ -82,6 +85,7 @@ void idi_nazad(unsigned int x, unsigned int y, unsigned int ugao)
 			}
 			else if(overflow_primanje > 200)
 			{
+				overflow_primanje = 0;
 				korak2 = 0;
 				sendMsg("OVERFLOW",&USART_XM);
 				
@@ -106,7 +110,7 @@ void taktika_kocka(void){
 		switch (korak)
 		{
 			case 0:
-				idi_pravo(500,0,90);
+				idi_pravo(400,0,0);
 				if (korak2 == 3)
 				{
 					sendMsg('korak++', &USART_XM);
@@ -116,7 +120,7 @@ void taktika_kocka(void){
 			break;
 			
 			case 1:
-				idi_pravo(500,500,180);
+				idi_pravo(400,400,0);
 				if (korak2 == 3)
 				{
 					sendMsg('korak++', &USART_XM);
@@ -127,7 +131,7 @@ void taktika_kocka(void){
 			break;
 			
 			case 2:
-				idi_nazad(1300,500,180);
+				idi_nazad(0,400,0);
 				if (korak2 == 3)
 				{
 					sendMsg('korak++', &USART_XM);
@@ -138,27 +142,15 @@ void taktika_kocka(void){
 			break;
 			
 			case 3:
-				idi_pravo(0,500,0);
+				idi_pravo(0,0,0);
 				if (korak2 == 3)
 				{
 					sendMsg('korak++', &USART_XM);
-					korak=4;
+					korak=0;
 					korak2 = 0;
 				}
 			
 			break;
-			
-			case 4:
-				idi_pravo(1000,0,0);
-				if (korak2 == 3)
-				{
-					sendMsg('korak++', &USART_XM);
-					korak=5;
-					korak2 = 0;
-				}
-			break;
-			
-			
 			
 			default:
 			break;
@@ -170,28 +162,48 @@ void taktika_1(void)
 	switch (korak)
 	{
 		case 0:
-			idi_pravo(500,0,0);
+			idi_pravo(1600,0,0);
 			if (korak2 == 3)
 			{
-				korak++;
+				sendMsg("Tacka 2", &USART_XM);
+				korak = 6;
 				korak2 = 0;
 			}
 		break;
 		
 		case 1:
-			idi_nazad(0,0,0);
+			idi_pravo(2100,1389,0);
 			if(korak2==3)
 			{
+					sendMsg("Tacka 3", &USART_XM);
 					korak++;
 					korak2 = 0;
 			}
 		break;
 		
 		case 2:
-			sendMsg("Zavrsio sam", &USART_XM);
-			//korak++;
+			idi_pravo(0,1389,0);
+			if(korak2==3)
+			{
+				sendMsg("Tacka 4", &USART_XM);
+				korak++;
+				korak2 = 0;
+			}
 		break;
 		
+		case 3:
+			idi_pravo(0,0,0);
+			if(korak2==3)
+			{
+				sendMsg("Tacka 1", &USART_XM);
+				korak++;
+				korak2 = 0;
+			}
+		break;
+	
+		case 6:
+			sendMsg("Case 6", &USART_XM);
+		break;
 		default:
 		break;
 	}

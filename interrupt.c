@@ -63,7 +63,6 @@ ISR(USARTE1_RXC_vect)
 				
 			case 'O': //O - OKAY FLAG (PRIMIO SAM PORUKU) 
 				if(receiveArray[7] == 'K'){
-					sendMsg("OKAY", &USART_XM);
 					okay_flag = 1;
 					RX_i_E1 =0;	
 				}
@@ -73,7 +72,6 @@ ISR(USARTE1_RXC_vect)
 				if(receiveArray[7] == 'T'){
 					stigao_flag = 1;
 					RX_i_E1 = 0;
-					sendMsg("STIGAO", &USART_XM);
 				}
 				break;
 				

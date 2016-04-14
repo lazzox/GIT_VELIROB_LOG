@@ -43,13 +43,13 @@ int main(void)
 	stigao_flag2 =0;
 	
 	while(1){
-		if (vreme_primanja > 200){
+		if (vreme_primanja > 100){
 			vreme_primanja = 0;
 			RX_i_E1 = 0;
 		}
 	
 	
-		taktika_kocka();
+		taktika_1();
 	//
 		//if(okay_flag == 1){
 			//sendMsg("OKAY", &USART_LCD);

@@ -32,6 +32,7 @@ void idi_pravo(unsigned int x, unsigned int y, unsigned int ugao)
 		
 		case 1:
 			if(okay_flag){
+				stigao_flag2 = 1;
 				sendMsg("okey",&USART_XM);
 				korak2 = 2;
 				okay_flag = 0;
@@ -48,6 +49,7 @@ void idi_pravo(unsigned int x, unsigned int y, unsigned int ugao)
 		
 		case 2:
 			if(stigao_flag){
+				stigao_flag2 = 0;
 				sendMsg("stigao",&USART_XM);
 				stigao_flag = 0;
 				korak2++;
@@ -162,17 +164,17 @@ void taktika_1(void)
 	switch (korak)
 	{
 		case 0:
-			idi_pravo(1600,0,0);
+			idi_pravo(2000,0,90);
 			if (korak2 == 3)
 			{
 				sendMsg("Tacka 2", &USART_XM);
-				korak = 6;
+				korak ++;
 				korak2 = 0;
 			}
 		break;
 		
 		case 1:
-			idi_pravo(2100,1389,0);
+			idi_pravo(2000,1300,180);
 			if(korak2==3)
 			{
 					sendMsg("Tacka 3", &USART_XM);
@@ -182,7 +184,7 @@ void taktika_1(void)
 		break;
 		
 		case 2:
-			idi_pravo(0,1389,0);
+			idi_pravo(0,1300,270);
 			if(korak2==3)
 			{
 				sendMsg("Tacka 4", &USART_XM);
@@ -195,14 +197,10 @@ void taktika_1(void)
 			idi_pravo(0,0,0);
 			if(korak2==3)
 			{
-				sendMsg("Tacka 1", &USART_XM);
-				korak++;
+				sendMsg("Evo vam kurac mehatronicari", &USART_XM);
+				korak=0;
 				korak2 = 0;
 			}
-		break;
-	
-		case 6:
-			sendMsg("Case 6", &USART_XM);
 		break;
 		default:
 		break;

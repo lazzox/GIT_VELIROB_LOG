@@ -30,6 +30,7 @@ RX_i_E1,
 RX_i_C0,
 stigao_flag,
 stigao_flag2,
+stigao_flag_pomocni,
 
 //KOMUNIKACIJA
 adresa_long,
@@ -43,6 +44,7 @@ vreme_primanja,
 overflow_primanje,
 sys_time,
 tajmer,
+senzor_tajmer,
 TIMED_OUT_VREME,
 korak,
 korak2;

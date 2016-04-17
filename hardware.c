@@ -102,7 +102,7 @@ void Podesi_USART_Komunikaciju(void)
 	USART_InterruptDriver_Initialize(&USART_D1_data, &USARTD1, USART_DREINTLVL_LO_gc);//Koriscenje USARTE0 i inicijalizacija buffer-a
 	USART_Format_Set(USART_D1_data.usart, USART_CHSIZE_8BIT_gc, USART_PMODE_DISABLED_gc, false); //USARTE0, 8 Data bits, No Parity, 1 Stop bit.
 	USART_RxdInterruptLevel_Set(USART_D1_data.usart, USART_RXCINTLVL_LO_gc); //Aktiviranje RXC interrupt-a
-	USART_Baudrate_Set(&USARTD1, 1, 1 );//Podesavanje Baud rate	//666500
+	USART_Baudrate_Set(&USARTD1, 1, 1 );//Podesavanje Baud rate	//66500
 	USART_Rx_Enable(USART_D1_data.usart);//Ukljucivanje RX i TX
 	USART_Tx_Enable(USART_D1_data.usart);
 
@@ -141,11 +141,11 @@ void Podesi_Pinove(void)
 	//PORTA - digitalni izlazi
 	PORT_SetPinsAsOutput(&PORTA,0xFF);
 	PORT_ConfigurePins(&PORTA,
-	0xFF,
-	0,
-	0,
-	PORT_OPC_TOTEM_gc,
-	PORT_ISC_INPUT_DISABLE_gc);
+						0xFF,
+						0,
+						0,
+						PORT_OPC_TOTEM_gc,
+						PORT_ISC_INPUT_DISABLE_gc);
 	PORT_ClearPins(&PORTA, 0xFF);
 
 
@@ -163,21 +163,21 @@ void Podesi_Pinove(void)
 	//PORTC - digitalni izlazi
 	PORT_SetPinsAsOutput(&PORTC,0xFF);
 	PORT_ConfigurePins(&PORTC,
-	0xFF,
-	0,
-	0,
-	PORT_OPC_PULLDOWN_gc,
-	PORT_ISC_INPUT_DISABLE_gc);
+						0xFF,
+						0,
+						0,
+						PORT_OPC_PULLDOWN_gc,
+						PORT_ISC_INPUT_DISABLE_gc);
 	PORT_ClearPins(&PORTC, 0xFF);
 
 	//PORTD - digitalni izlazi
 	PORT_SetPinsAsOutput(&PORTD,0xFF);
 	PORT_ConfigurePins(&PORTD,
-	0xFF,
-	0,
-	0,
-	PORT_OPC_TOTEM_gc,
-	PORT_ISC_INPUT_DISABLE_gc);
+						0xFF,
+						0,
+						0,
+						PORT_OPC_TOTEM_gc,
+						PORT_ISC_INPUT_DISABLE_gc);
 	PORT_ClearPins(&PORTD, 0xFF);
 
 	//PORTE - digitalni izlazi
@@ -194,11 +194,11 @@ void Podesi_Pinove(void)
 	//PORTF - digitalni izlazi
 	PORT_SetPinsAsOutput(&PORTF,0xFF);
 	PORT_ConfigurePins(&PORTF,
-	0xFF,
-	0,
-	0,
-	PORT_OPC_TOTEM_gc,
-	PORT_ISC_INPUT_DISABLE_gc);
+						0xFF,
+						0,
+						0,
+						PORT_OPC_TOTEM_gc,
+						PORT_ISC_INPUT_DISABLE_gc);
 	PORT_ClearPins(&PORTF, 0xFF);
 	
 	//PORTK - digitalni izlazi
@@ -206,31 +206,30 @@ void Podesi_Pinove(void)
 	//PORT_SetPinsAsOutput(&PORTK,0b00100000);
 	//PORTK.PIN6CTRL=0b00111001;
  	PORT_ConfigurePins(&PORTK,
- 	0xFF,
- 	0,
- 	0,
- 	PORT_OPC_PULLUP_gc,
- 	PORT_ISC_INPUT_DISABLE_gc);
+ 						0xFF,
+ 						0,
+ 						0,
+ 						PORT_OPC_PULLUP_gc,
+ 						PORT_ISC_INPUT_DISABLE_gc);
  	//PORT_ClearPins(&PORTK, 0xFF);
 	
 	//PORTJ - digitalni izlazi
-	PORT_SetPinsAsOutput(&PORTJ,0xFF);
+	PORT_SetPinsAsInput(&PORTJ,0xFF);
 	PORT_ConfigurePins(&PORTJ,
-	0xFF,
-	0,
-	0,
-	PORT_OPC_TOTEM_gc,
-	PORT_ISC_INPUT_DISABLE_gc);
-	PORT_ClearPins(&PORTJ, 0xFF);
+						0xFF,
+						0,
+						0,
+						PORT_OPC_PULLDOWN_gc,
+						PORT_ISC_RISING_gc);
 	
 	//PORTH - digitalni izlazi
 	PORT_SetPinsAsOutput(&PORTH,0xFF);
 	PORT_ConfigurePins(&PORTH,
-	0xFF,
-	0,
-	0,
-	PORT_OPC_TOTEM_gc,
-	PORT_ISC_INPUT_DISABLE_gc);
+						0xFF,
+						0,
+						0,
+						PORT_OPC_TOTEM_gc,
+						PORT_ISC_INPUT_DISABLE_gc);
 	PORT_ClearPins(&PORTH, 0xFF);
 	//
 	//PORT_SetPinsAsInput( &PORTB, 0xFF );

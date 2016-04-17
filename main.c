@@ -31,7 +31,9 @@ int main(void)
 	
 	_delay_ms(1500);
 	tajmer=0;
+	senzor_tajmer=0;
 	vreme_primanja = 0;
+	stigao_flag_pomocni=0;
 
 	//idi_pravo(300,0,90);
 	sendMsg("LOGIKA", &USART_XM);
@@ -50,6 +52,11 @@ int main(void)
 	
 	
 		taktika_1();
+		if (senzor_tajmer>200)
+		{
+			senzor_stop();
+			senzor_tajmer=0;
+		}
 	//
 		//if(okay_flag == 1){
 			//sendMsg("OKAY", &USART_LCD);

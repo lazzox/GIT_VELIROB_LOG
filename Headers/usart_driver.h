@@ -257,6 +257,7 @@ okay_flag,
 stigao_flag,
 stigao_flag2,
 stigao_flag_pomocni,
+senzor_korak,
 RX_i_E0,
 RX_i_E1,
 RX_i_C0;

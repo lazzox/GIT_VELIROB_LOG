@@ -43,20 +43,34 @@ int main(void)
 	korak = 0;
 	korak2 = 0;
 	stigao_flag2 =0;
+	senzor_korak=0;
 	
 	while(1){
 		if (vreme_primanja > 100){
 			vreme_primanja = 0;
 			RX_i_E1 = 0;
 		}
-	
+
 	
 		taktika_1();
+		
 		if (senzor_tajmer>200)
 		{
 			senzor_stop();
 			senzor_tajmer=0;
+			senzor_korak++;
 		}
+		
+		//if (senzor_tajmer>350)
+		//{
+			//senzor_korak=0;
+		//}
+		//
+		//if (senzor_korak>=5)
+		//{
+			//korak++;
+		//}
+		
 	//
 		//if(okay_flag == 1){
 			//sendMsg("OKAY", &USART_LCD);

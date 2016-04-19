@@ -3,8 +3,13 @@
 
 #include "avr_compiler.h"
 
-// USART buffer defines. 
 
+
+//Dodao ovde da ne menjam i0128a1
+#define USART_XM    (*(USART_t *) 0x08A0)  /*xMega */
+#define USART_XDRIVE    (*(USART_t *) 0x0AB0)  /* Universal Asynchronous Receiver-Transmitter E1 */
+
+// USART buffer defines. 
 //  Receive buffer size: 2,4,8,16,32,64,128 or 256 bytes. 
 #define USART_RX_BUFFER_SIZE 128
 //  Transmit buffer size: 2,4,8,16,32,64,128 or 256 bytes 
@@ -14,9 +19,6 @@
 //  Transmit buffer mask. 
 #define USART_TX_BUFFER_MASK ( USART_TX_BUFFER_SIZE - 1 )
 
-//Dodao ovde da ne menjam i0128a1
-#define USART_XM    (*(USART_t *) 0x08A0)  /*xMega */
-#define USART_XDRIVE    (*(USART_t *) 0x0AB0)  /* Universal Asynchronous Receiver-Transmitter E1 */
 
 
 #if ( USART_RX_BUFFER_SIZE & USART_RX_BUFFER_MASK )
@@ -25,6 +27,9 @@
 #if ( USART_TX_BUFFER_SIZE & USART_TX_BUFFER_MASK )
 #error TX buffer size is not a power of 2
 #endif
+
+
+
 
 
 // USART transmit and receive ring buffer. 
@@ -257,7 +262,7 @@ okay_flag,
 stigao_flag,
 stigao_flag2,
 stigao_flag_pomocni,
-senzor_korak,
+flag_senzor,
 RX_i_E0,
 RX_i_E1,
 RX_i_C0;
@@ -270,7 +275,10 @@ tajmer,
 senzor_tajmer,
 TIMED_OUT_VREME,
 korak,
-korak2;
+korak_detek,
+korak2,
+senzor_enable_prednji,
+senzor_enable_zadnji;;
 
 void SendChar(char c, USART_t * USART);
 void sendMsg(char *poruka, USART_t * usartic);

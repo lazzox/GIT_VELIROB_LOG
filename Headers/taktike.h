@@ -10,9 +10,12 @@
 
 
 
-void idi_pravo(unsigned int x, unsigned int y, unsigned int ugao);
-void idi_nazad(unsigned int x, unsigned int y, unsigned int ugao);
+void idi_pravo(signed int x, signed int y, signed int ugao);
+void idi_nazad(signed int x, signed int y, signed int ugao);
 void senzor_stop (void);
+void rotiraj (unsigned int ugao);
+
+void brzina(unsigned int brzinaa);
 
 void taktika_kocka(void);
 void taktika_1(void);

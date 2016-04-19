@@ -70,16 +70,19 @@ ISR(USARTE1_RXC_vect)
 				break;
 				
 			case 'S': //TU - Kao TU SAM (STIGAO SAM)
-				if(receiveArray[7] == 'T'){
+				if(receiveArray[7] == 'T')
+				{
 					if (stigao_flag2) stigao_flag = 1;
 					RX_i_E1 = 0;
+					
 				}
 				break;
 				
 			default:
 				break;
 			
-		}		
+		}	
+		
 	}
 
 }

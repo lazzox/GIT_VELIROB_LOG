@@ -29,7 +29,7 @@ int main(void)
 	Podesi_Interapt();					//podesavanje interapt prioriteta
 	Podesi_USART_Komunikaciju();		//podesavanje komunikacije
 	
-	_delay_ms(1000);
+	_delay_ms(2000);
 	
 	tajmer=0;
 	senzor_tajmer=0;
@@ -38,50 +38,42 @@ int main(void)
 	sys_time=0;
 
 	//idi_pravo(300,0,90);
-	
+	sendMsg("LOGIKA", &USART_XM);
 	RX_i_E1 = 0;
 	
 	TIMED_OUT_VREME = 200;
 	korak = 0;
 	korak2 = 0;
-	okay_flag=0;
-	stigao_flag=0;
 	stigao_flag2 =0;
-	sys_time=0;
-	sendMsg("LOGIKA", &USARTD1);
+	//brzina(250);
 	
-	_delay_ms(500);
-	
-	
-	//while (1)
-	//{
-		//if(PORTJ.IN & 0b00000001)
-		//{
-			//sendMsg("KEFA",&USARTD1);
-		//}
-		//else{
-			//sendMsg("CILO",&USARTD1);
-		//}
-		//_delay_ms(1000);
-	//}
-	
+	_delay_ms(100);
 	while(1){
 		if (vreme_primanja > 100){
 			vreme_primanja = 0;
 			RX_i_E1 = 0;
 		}
-
- 	if (senzor_tajmer>150)
- 	{
-	 	senzor_stop();
-	 	senzor_tajmer=0;
- 	}
+		
+		
+// 	if (senzor_tajmer>150)
+// 	{
+// 		senzor_stop();
+// 		senzor_tajmer=0;
+// 	}
  		
-		//taktika_kocka();
-		taktika_1();
+// 		taktika_kocka();
+		taktika_kocka();
+		
 		
 		
 	
+		
+		
+	//
+		//if(okay_flag == 1){
+			//sendMsg("OKAY", &USART_LCD);
+			//okay_flag = 2;
+		//}
 	}
 }//main
 

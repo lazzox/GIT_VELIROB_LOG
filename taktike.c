@@ -13,30 +13,51 @@
 #include "Headers/globals.h"
 #include "Headers/usart_driver.h"
 
-
 #define senzor_prednji (PORTJ.IN & 0b00000001)
 #define senzor_zadnji (PORTJ.IN & 0b00000010)
 
-//#define s1s (sys_time>666)
-//#define s2s (sys_time>1332)
-//#define s3s (sys_time>1998)
-//#define s4s (sys_time>2664)
-//#define s5s (sys_time>3330)
-//#define s10s (sys_time>6660)
+void postavi_sistem(long x, long y, long ugao)
+{
+	switch(korak2){
+		case 0:
+		SendChar('G',&USART_XDRIVE);
+		SendChar((x>>8),&USART_XDRIVE);
+		SendChar(x,&USART_XDRIVE);
+		SendChar((y>>8),&USART_XDRIVE);
+		SendChar(y,&USART_XDRIVE);
+		SendChar((ugao>>8),&USART_XDRIVE);
+		SendChar(ugao,&USART_XDRIVE);
+		SendChar('S',&USART_XDRIVE);
+		korak2++;
+		overflow_primanje = 0;
+		break;
+		case 1:
+		if(okay_flag){
+			
+			//sendMsg("okey",&USART_XM);
+			korak2 = 3;
+			okay_flag = 0;
+			overflow_primanje = 0;
+		}
+		else if(overflow_primanje > 200)
+		{
+			overflow_primanje = 0;
+			korak2 = 0;
+			sendMsg("OVERFLOW",&USART_XM);
+			
+		}
+		
+		break;
+		
+		default:
+		break;
+	}
+}
 
 void idi_pravo(signed int x, signed int y, signed int ugao)
 {
-	senzor_enable_prednji=1;
-	senzor_enable_zadnji=0;
 	switch(korak2){
 		case 0:
-			//LOGIKA DODAJE +4000 za X, Y i +720 za ugao
-			//TO JE DA BI SE SLALI POZITIVNI BROJEVI PREKO USART-a
-			//A KASNIJE SE ODUZME DA BI SE DOBILI PRAVI BROJEVI (cak
-			// i ako su negativni)
-			x += 4000;
-			y += 4000;
-			ugao += 720;
 			SendChar('A',&USART_XDRIVE);
 			SendChar((x>>8),&USART_XDRIVE);
 			SendChar(x,&USART_XDRIVE);
@@ -96,27 +117,18 @@ void idi_pravo(signed int x, signed int y, signed int ugao)
 
 void idi_nazad(signed int x, signed int y, signed int ugao)
 {
-	senzor_enable_prednji=0;
-	senzor_enable_zadnji=1;
 	switch(korak2){
 		case 0:
-			//LOGIKA DODAJE +4000 za X, Y i +720 za ugao
-			//TO JE DA BI SE SLALI POZITIVNI BROJEVI PREKO USART-a
-			//A KASNIJE SE ODUZME DA BI SE DOBILI PRAVI BROJEVI (cak
-			// i ako su negativni)
-			x += 4000;
-			y += 4000;
-			ugao += 720;
-			SendChar('B',&USART_XDRIVE);
-			SendChar((x>>8),&USART_XDRIVE);
-			SendChar(x,&USART_XDRIVE);
-			SendChar((y>>8),&USART_XDRIVE);
-			SendChar(y,&USART_XDRIVE);
-			SendChar((ugao>>8),&USART_XDRIVE);
-			SendChar(ugao,&USART_XDRIVE);
-			SendChar('X',&USART_XDRIVE);
-			overflow_primanje = 0;
-			korak2++;
+		SendChar('B',&USART_XDRIVE);
+		SendChar((x>>8),&USART_XDRIVE);
+		SendChar(x,&USART_XDRIVE);
+		SendChar((y>>8),&USART_XDRIVE);
+		SendChar(y,&USART_XDRIVE);
+		SendChar((ugao>>8),&USART_XDRIVE);
+		SendChar(ugao,&USART_XDRIVE);
+		SendChar('X',&USART_XDRIVE);
+		overflow_primanje = 0;
+		korak2++;
 		break;
 		
 		case 1:
@@ -193,19 +205,10 @@ void senzor_stop (void)
 		flag_senzor=0;
 		//korak_detek=korak;
 		
-	}	
+	}
+			
+
 }
-
-
-//void cekaj_vreme (unsigned int vremee)
-//{
-	//if (!vreme_flag)
-	//{
-		//
-	//}
-	//
-	//vreme_flag=1;
-//}
 
 
 void brzina (unsigned int brzinaa)
@@ -226,7 +229,7 @@ void brzina (unsigned int brzinaa)
 		
 		case 1:
 		if(okay_flag){
-			korak2 = 2;
+			korak2 = 3;
 			okay_flag = 0;
 			overflow_primanje = 0;
 		}
@@ -247,82 +250,50 @@ void brzina (unsigned int brzinaa)
 
 void taktika_kocka(void){
 		
-		
-		
-		switch(korak)
+		switch (korak)
 		{
-		
-			
 			case 0:
-			//if (sys_time>1500)
-			//{
-				//sendMsg("case 0", &USART_XM);
-				//brzina(500);
-				idi_pravo(1000,0,0);
+				//brzina(250);
+				idi_pravo(1100,0,0);
 				if (korak2 == 3)
 				{
-					sendMsg("Tacka 0234324", &USARTD1);
 					korak++;
 					korak2 = 0;
-					sys_time=0;
 				}
-			//}
 			break;
 			
 			case 1:
 				idi_nazad(0,0,0);
 				if (korak2 == 3)
 				{
-					sendMsg("Tacka 1", &USARTD1);
 					korak++;
 					korak2 = 0;
-					sys_time=0;
+					
 				}
+			break;
 			
-// 			case 2:
-// 			sendMsg("case 1", &USART_XM);
-// 			//if (sys_time>3500)
-// 			//{
-// 				idi_pravo(500,0,0);
-// 				if (korak2 == 3)
-// 				{
-// 					sendMsg("Tacka 2", &USARTD1);
-// 					korak++;
-// 					korak2 = 0;
-// 					sys_time=0;
-// 				}
-// 			//}
-// 			break;
-// 			
-// 			case 3:
-// 			//sendMsg("case 2", &USART_XM);
-// 				idi_pravo(800,0,0);
-// 				if (korak2 == 3)
-// 				{
-// 					sendMsg("Tacka 3", &USARTD1);
-// 					//sendMsg('korak++', &USART_XM);
-// 					//if (!stigao_flag_pomocni)
-// 					korak++;
-// 					korak2 = 0;
-// 					sys_time=0;
-// 				}
-// 			break;
-// 			
-// 			case 4:
-// 			//sendMsg("case 3", &USART_XM);
-// 			//if (sys_time>3500)
-// 			//{
-// 				idi_pravo(0,0,0);
-// 				if (korak2 == 3)
-// 				{
-// 					sendMsg("Tacka 4", &USARTD1);
-// 					//if (!stigao_flag_pomocni)
-// 					korak=0;
-// 					korak2 = 0;
-// 					sys_time=0;
-// 				}
-// 			//}
-// 			break;
+			//case 2:
+				//idi_pravo(0,500,0);
+				//if (korak2 == 3)
+				//{
+					//sendMsg('korak++', &USART_XM);
+					////if (!stigao_flag_pomocni)
+					//korak=3;
+					//korak2 = 0;
+				//}
+			//break;
+			//
+			//case 3:
+				//idi_pravo(0,0,0);
+				//if (korak2 == 3)
+				//{
+					//sendMsg('korak++', &USART_XM);
+					////if (!stigao_flag_pomocni)
+					//korak=0;
+					//korak2 = 0;
+				//}
+			//
+			//break;
 			
 			default:
 			break;
@@ -335,75 +306,33 @@ void taktika_1(void)
 	switch (korak)
 	{
 		case 0:
-			//brzina(250);
-			idi_pravo(400,0,0);			
+			brzina(250);
+			idi_pravo(550,0,0);			
 			if (korak2 == 3)
 			{
+				sendMsg("Tacka 2", &USART_XM);
 				korak ++;
 				korak2 = 0;
-				sys_time=0;
 			}
 		break;
-		
+			
 		case 1:
-		brzina(350);
-		if (korak2==2)
-		{
-		korak++;
-		korak2=0;
-		sys_time=0;
-		}
+			idi_pravo(550,550,0);
+			if (korak2==3)
+			{
+				korak++;
+				korak2=0;
+			}
 		break;
 			
-		case 2:
-		if (sys_time>1000)
-		{
-			idi_pravo(400,-400,0);
-			if (korak2==3)
-			{
-				korak++;
-				korak2=0;
-				sys_time=0;
-			}
-		}
-		break;
-		
-		case 3:
-		if (sys_time>1000)
-		{
-			idi_pravo(0,-400,0);
-			if (korak2==3)
-			{
-				korak++;
-				korak2=0;
-				sys_time=0;
-			}
-		}
-		break;
-		
-		case 4:
-		if (sys_time>1000)
-		{
-			idi_pravo(0,0,0);
-			if (korak2==3)
-			{
-				korak++;
-				korak2=0;
-				sys_time=0;
-			}
-		}
-		break;
-		
-		
-			
- 		//case 2:
- 			//idi_pravo(0,550,0);
- 			//if (korak2==3)
- 			//{
- 				//korak++;
- 				//korak2=0;
- 			//}
- 		//break;
+ 		case 2:
+ 			idi_pravo(0,550,0);
+ 			if (korak2==3)
+ 			{
+ 				korak++;
+ 				korak2=0;
+ 			}
+ 		break;
 			
 			
 			//case 3:

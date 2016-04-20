@@ -15,6 +15,7 @@ void idi_nazad(signed int x, signed int y, signed int ugao);
 void senzor_stop (void);
 void rotiraj (unsigned int ugao);
 
+void postavi_sistem(long x, long y, long ugao);
 void brzina(unsigned int brzinaa);
 
 void taktika_kocka(void);

@@ -49,8 +49,8 @@ senzor_tajmer,
 TIMED_OUT_VREME,
 korak,
 korak_detek,
-korak2,
 senzor_enable_prednji,
-senzor_enable_zadnji;
+senzor_enable_zadnji,
+korak2;
 							
 #endif /* GLOBALS_H_ */

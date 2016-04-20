@@ -47,14 +47,14 @@ void Podesi_Oscilator(void)
 void Podesi_USART_Komunikaciju(void)
 {
 	//USART_D1 - LCD - 62500
-	//PORTD.DIR &= PIN7_bm;		//PD7 (TXD1) - izlaz
-	//PORTD.DIR  |= ~PIN6_bm;		//PD6 (RXD1) - ulaz
-	//USART_InterruptDriver_Initialize(&USART_D1_data, &USARTD1, USART_DREINTLVL_LO_gc); //Koriscenje USARTD1 i inicijalizacija buffer-a
-	//USART_Format_Set(USART_D1_data.usart, USART_CHSIZE_8BIT_gc, USART_PMODE_DISABLED_gc, false);//USARTE0, 8 Data bits, No Parity, 1 Stop bit.
-	//USART_RxdInterruptLevel_Set(USART_D1_data.usart, USART_RXCINTLVL_LO_gc); //Aktiviranje RXC interrupt-a
-	//USART_Baudrate_Set(&USARTD1, 1, 1 );  //62500
-	//USART_Rx_Enable(USART_D1_data.usart); //Ukljucivanje RX i TX
-	//USART_Tx_Enable(USART_D1_data.usart);
+	PORTD.DIR &= PIN7_bm;		//PD7 (TXD1) - izlaz
+	PORTD.DIR  |= ~PIN6_bm;		//PD6 (RXD1) - ulaz
+	USART_InterruptDriver_Initialize(&USART_D1_data, &USARTD1, USART_DREINTLVL_LO_gc); //Koriscenje USARTD1 i inicijalizacija buffer-a
+	USART_Format_Set(USART_D1_data.usart, USART_CHSIZE_8BIT_gc, USART_PMODE_DISABLED_gc, false);//USARTE0, 8 Data bits, No Parity, 1 Stop bit.
+	USART_RxdInterruptLevel_Set(USART_D1_data.usart, USART_RXCINTLVL_LO_gc); //Aktiviranje RXC interrupt-a
+	USART_Baudrate_Set(&USARTD1, 1, 2 );  //62500
+	USART_Rx_Enable(USART_D1_data.usart); //Ukljucivanje RX i TX
+	USART_Tx_Enable(USART_D1_data.usart);
 	
 	//USART_E1 - SALJE NA XDRIVE - 56000
 	PORTE.DIR |= PIN7_bm;//PE7 (TXE1) - izlaz  
@@ -85,6 +85,19 @@ void Podesi_USART_Komunikaciju(void)
 	//USART_Rx_Enable(USART_E0_data.usart);
 	//USART_Tx_Enable(USART_E0_data.usart);
 	
+	//USART_E0 - AX_12
+	PORTE.DIR |= PIN3_bm;	//PE3 (TXE0) - izlaz
+	PORTE.DIR  &= ~PIN2_bm;	//PE2 (RXE0) - ulaz
+	USART_InterruptDriver_Initialize(&USART_E0_data, &USARTE0, USART_DREINTLVL_LO_gc);	//Koriscenje USARTE0 i inicijalizacija buffer-a
+	USART_Format_Set(USART_E0_data.usart, USART_CHSIZE_8BIT_gc, USART_PMODE_DISABLED_gc, false);	//USARTE0, 8 Data bits, No Parity, 1 Stop bit.
+	USART_RxdInterruptLevel_Set(USART_E0_data.usart, USART_RXCINTLVL_LO_gc);	//Aktiviranje RXC interrupt-a
+	USART_TxdInterruptLevel_Set(USART_E0_data.usart, USART_RXCINTLVL_HI_gc);
+	//USART_Baudrate_Set(&USARTE0, 983, -7 );	//Podesavanje Baud rate	//57600 - Stari BAUD Njegos
+	USART_Baudrate_Set(&USARTE0, 27, -3); //115200 - 8Mhz - AX12 Radi sa ovim
+	//USART_Baudrate_Set(&USARTE0,12,1);
+	USART_Rx_Enable(USART_E0_data.usart);	//Ukljucivanje RX i TX
+	USART_Tx_Enable(USART_E0_data.usart);
+	
 
 	//USART_C0 - Xmega_USB - 115200
 	PORTC.DIR &= PIN3_bm;	//PE3 (TXE0) - izlaz
@@ -96,15 +109,16 @@ void Podesi_USART_Komunikaciju(void)
 	USART_Rx_Enable(USART_C0_data.usart);//Ukljucivanje RX i TX
 	USART_Tx_Enable(USART_C0_data.usart);
 
-	//USART_D1 - LCD
-	PORTD.DIR &= PIN7_bm;//PE3 (TXE0) - izlaz
-	PORTD.DIR  |= ~PIN6_bm;//PE2 (RXE0) - ulaz
-	USART_InterruptDriver_Initialize(&USART_D1_data, &USARTD1, USART_DREINTLVL_LO_gc);//Koriscenje USARTE0 i inicijalizacija buffer-a
-	USART_Format_Set(USART_D1_data.usart, USART_CHSIZE_8BIT_gc, USART_PMODE_DISABLED_gc, false); //USARTE0, 8 Data bits, No Parity, 1 Stop bit.
-	USART_RxdInterruptLevel_Set(USART_D1_data.usart, USART_RXCINTLVL_LO_gc); //Aktiviranje RXC interrupt-a
-	USART_Baudrate_Set(&USARTD1, 1, 1 );//Podesavanje Baud rate	//666500
-	USART_Rx_Enable(USART_D1_data.usart);//Ukljucivanje RX i TX
-	USART_Tx_Enable(USART_D1_data.usart);
+	////USART_D1 - LCD
+	//PORTD.DIR &= PIN7_bm;//PE3 (TXE0) - izlaz
+	//PORTD.DIR  |= ~PIN6_bm;//PE2 (RXE0) - ulaz
+	//USART_InterruptDriver_Initialize(&USART_D1_data, &USARTD1, USART_DREINTLVL_LO_gc);//Koriscenje USARTE0 i inicijalizacija buffer-a
+	//USART_Format_Set(USART_D1_data.usart, USART_CHSIZE_8BIT_gc, USART_PMODE_DISABLED_gc, false); //USARTE0, 8 Data bits, No Parity, 1 Stop bit.
+	//USART_RxdInterruptLevel_Set(USART_D1_data.usart, USART_RXCINTLVL_LO_gc); //Aktiviranje RXC interrupt-a
+	////USART_Baudrate_Set(&USARTD1, 1, 1 );//Podesavanje Baud rate	//66500
+	//USART_Baudrate_Set(&USARTD1, 12, 1 );
+	//USART_Rx_Enable(USART_D1_data.usart);//Ukljucivanje RX i TX
+	//USART_Tx_Enable(USART_D1_data.usart);
 
 	Resetuj_USART();
 }
@@ -180,15 +194,14 @@ void Podesi_Pinove(void)
 						PORT_ISC_INPUT_DISABLE_gc);
 	PORT_ClearPins(&PORTD, 0xFF);
 
-	//PORTE - digitalni izlazi
-// 	PORT_SetPinsAsOutput(&PORTE,0xFF);
-// 	PORT_ConfigurePins(&PORTE,
-// 	0xFF,
-// 	0,
-// 	0,
-// 	PORT_OPC_TOTEM_gc,
-// 	PORT_ISC_INPUT_DISABLE_gc);
-// 	PORT_ClearPins(&PORTE, 0xFF);
+	PORT_SetPinsAsOutput(&PORTE,0x03);
+	PORT_ConfigurePins(&PORTE,
+						0x03,
+						0,
+						0,
+						PORT_OPC_TOTEM_gc,
+						PORT_ISC_INPUT_DISABLE_gc);
+	PORT_ClearPins(&PORTE, 0x03);
 
 	
 	//PORTF - digitalni izlazi

@@ -32,6 +32,10 @@ stigao_flag,
 stigao_flag2,
 stigao_flag_pomocni,
 flag_senzor,
+sensor_dir,
+sensor_enable,
+senzor_enable_prednji,
+senzor_enable_zadnji,
 
 //KOMUNIKACIJA
 adresa_long,
@@ -49,8 +53,7 @@ senzor_tajmer,
 TIMED_OUT_VREME,
 korak,
 korak_detek,
-senzor_enable_prednji,
-senzor_enable_zadnji,
+
 korak2;
 							
 #endif /* GLOBALS_H_ */

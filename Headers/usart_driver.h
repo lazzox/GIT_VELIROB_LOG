@@ -267,13 +267,11 @@ vreme_primanja,
 overflow_primanje,
 sys_time,
 tajmer,
-senzor_tajmer,
 TIMED_OUT_VREME,
+senzor_tajmer,
 korak,
-korak_detek,
-senzor_enable_prednji,
-senzor_enable_zadnji,
 korak2;
+
 
 void SendChar(char c, USART_t * USART);
 void sendMsg(char *poruka, USART_t * usartic);

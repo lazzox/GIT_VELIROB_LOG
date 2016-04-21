@@ -236,14 +236,13 @@ void Podesi_Pinove(void)
 						PORT_ISC_RISING_gc);
 	
 	//PORTH - digitalni izlazi
-	PORT_SetPinsAsOutput(&PORTH,0xFF);
+	PORT_SetPinsAsInput(&PORTH,0xFF);
 	PORT_ConfigurePins(&PORTH,
 						0xFF,
 						0,
 						0,
-						PORT_OPC_TOTEM_gc,
-						PORT_ISC_INPUT_DISABLE_gc);
-	PORT_ClearPins(&PORTH, 0xFF);
+						PORT_OPC_PULLUP_gc,
+	PORT_ISC_RISING_gc);
 	//
 	//PORT_SetPinsAsInput( &PORTB, 0xFF );
 	//PORT_ConfigurePins( &PORTB,

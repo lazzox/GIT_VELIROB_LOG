@@ -26,6 +26,8 @@
 #error TX buffer size is not a power of 2
 #endif
 
+#define USART_LCD    (*(USART_t *) 0x09B0)  /* Universal Synchronous/Asynchronous Receiver/Transmitter */
+
 
 // USART transmit and receive ring buffer. 
 typedef struct USART_Buffer

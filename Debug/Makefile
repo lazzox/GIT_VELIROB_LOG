@@ -89,9 +89,9 @@ TC_driver.d \
 usart_driver.d \
 main.d
 
-OUTPUT_FILE_PATH +=AXIS_VELIROB_LOG7.elf
+OUTPUT_FILE_PATH +=AXIS_VELIROB_LOG_7.elf
 
-OUTPUT_FILE_PATH_AS_ARGS +=AXIS_VELIROB_LOG7.elf
+OUTPUT_FILE_PATH_AS_ARGS +=AXIS_VELIROB_LOG_7.elf
 
 ADDITIONAL_DEPENDENCIES:=
 
@@ -150,13 +150,13 @@ all: $(OUTPUT_FILE_PATH) $(ADDITIONAL_DEPENDENCIES)
 $(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP) $(LIB_DEP) $(LINKER_SCRIPT_DEP)
 	@echo Building target: $@
 	@echo Invoking: AVR/GNU Linker : 4.9.2
-	$(QUOTE)D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -Wl,-Map="AXIS_VELIROB_LOG7.map" -Wl,--start-group -Wl,-lm  -Wl,--end-group -Wl,--gc-sections -mrelax -mmcu=atxmega128a1 -B "D:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\XMEGAA_DFP\1.0.38\gcc\dev\atxmega128a1"  
+	$(QUOTE)D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -Wl,-Map="AXIS_VELIROB_LOG_7.map" -Wl,--start-group -Wl,-lm  -Wl,--end-group -Wl,--gc-sections -mrelax -mmcu=atxmega128a1 -B "D:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\XMEGAA_DFP\1.0.38\gcc\dev\atxmega128a1"  
 	@echo Finished building target: $@
-	"D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objcopy.exe" -O ihex -R .eeprom -R .fuse -R .lock -R .signature -R .user_signatures  "AXIS_VELIROB_LOG7.elf" "AXIS_VELIROB_LOG7.hex"
-	"D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objcopy.exe" -j .eeprom  --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0  --no-change-warnings -O ihex "AXIS_VELIROB_LOG7.elf" "AXIS_VELIROB_LOG7.eep" || exit 0
-	"D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objdump.exe" -h -S "AXIS_VELIROB_LOG7.elf" > "AXIS_VELIROB_LOG7.lss"
-	"D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objcopy.exe" -O srec -R .eeprom -R .fuse -R .lock -R .signature -R .user_signatures "AXIS_VELIROB_LOG7.elf" "AXIS_VELIROB_LOG7.srec"
-	"D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-size.exe" "AXIS_VELIROB_LOG7.elf"
+	"D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objcopy.exe" -O ihex -R .eeprom -R .fuse -R .lock -R .signature -R .user_signatures  "AXIS_VELIROB_LOG_7.elf" "AXIS_VELIROB_LOG_7.hex"
+	"D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objcopy.exe" -j .eeprom  --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0  --no-change-warnings -O ihex "AXIS_VELIROB_LOG_7.elf" "AXIS_VELIROB_LOG_7.eep" || exit 0
+	"D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objdump.exe" -h -S "AXIS_VELIROB_LOG_7.elf" > "AXIS_VELIROB_LOG_7.lss"
+	"D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objcopy.exe" -O srec -R .eeprom -R .fuse -R .lock -R .signature -R .user_signatures "AXIS_VELIROB_LOG_7.elf" "AXIS_VELIROB_LOG_7.srec"
+	"D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-size.exe" "AXIS_VELIROB_LOG_7.elf"
 	
 	
 
@@ -168,5 +168,5 @@ $(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP) $(LIB_DEP) $(LINKER
 clean:
 	-$(RM) $(OBJS_AS_ARGS) $(EXECUTABLES)  
 	-$(RM) $(C_DEPS_AS_ARGS)   
-	rm -rf "AXIS_VELIROB_LOG7.elf" "AXIS_VELIROB_LOG7.a" "AXIS_VELIROB_LOG7.hex" "AXIS_VELIROB_LOG7.lss" "AXIS_VELIROB_LOG7.eep" "AXIS_VELIROB_LOG7.map" "AXIS_VELIROB_LOG7.srec" "AXIS_VELIROB_LOG7.usersignatures"
+	rm -rf "AXIS_VELIROB_LOG_7.elf" "AXIS_VELIROB_LOG_7.a" "AXIS_VELIROB_LOG_7.hex" "AXIS_VELIROB_LOG_7.lss" "AXIS_VELIROB_LOG_7.eep" "AXIS_VELIROB_LOG_7.map" "AXIS_VELIROB_LOG_7.srec" "AXIS_VELIROB_LOG_7.usersignatures"
 	

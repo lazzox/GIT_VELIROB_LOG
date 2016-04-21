@@ -20,12 +20,12 @@
 #include "Headers/globals.h"
 #include "Headers/hardware.h"
 #include "Headers/taktike.h"
+
 #define spusta 0
 #define podize 1
 
 int main(void)
 {
-	//PORTE.OUT = 0x01; //Za profi servo
 	tajmer=0;
 	senzor_tajmer=0;
 	vreme_primanja = 0;
@@ -43,52 +43,70 @@ int main(void)
 	Podesi_USART_Komunikaciju();		//podesavanje komunikacije
 	
 	_delay_ms(2000);
-	PORTE.OUT = 0x01; //Za service
-	sendMsg("LOGIKA", &USARTD1);
+	PORTE.OUT |= 0x01; //Za service
+	sendMsg("KEFALONIJA", &USART_LCD);
 
 	//ProfiServo(br. servoa, ugao, brzina) - ugao: 100 - 300; brzina: 100-600
-	while(1){ //ZAKOMENTARISI OVAJ WHILE - KORISTIMO SAMO ZA AX12 TESTIRANJE
-		//Za 5:
-		//148
-		//otvoreno 150 zatvoreno 60
-		//hvataljka na velikom robotu
-		//ispod 50 i iznad 250 ne sme
-		//za 7:
-		//150 i 240;
-		//AX_12(7,150);
-		///AX_12(5,70);
-
-		//za 4:
-		//230 odvaja
-		//300
-		
-		//ProfiServo(6,0,300);
-		//ProfiServo_WheelMode(6,0);
-		//_delay_ms(4700);
-		//ProfiServo(6,150,300);
-		ProfiServo_WheelMode(6,spusta);
-		//sendMsg("LOGIKA",&USARTD1);
-		//_delay_ms(4100);
-		ProfiServo(4,100,300);
-		//_delay_ms(2000);
-		//ProfiServo_WheelMode_STOP(6);
-		_delay_ms(2000);
-		ProfiServo(4,180,300);
-		_delay_ms(2000);
-	}
+ //	while(1){ //ZAKOMENTARISI OVAJ WHILE - KORISTIMO SAMO ZA AX12 TESTIRANJE
+ 		//Za 5:
+ 		//148
+ 		//otvoreno 150 zatvoreno 60
+ 		//hvataljka na velikom robotu
+ 		//ispod 50 i iznad 250 ne sme
+ 		//za 7:
+ 		//150 i 240;
+ 		//AX_12(7,150);
+ 		///AX_12(5,70);
+ 
+ 		//za 4:
+ 		//230 odvaja
+ 		//300
+ 		
+ 		//ProfiServo(6,0,300);
+ 		//ProfiServo_WheelMode(6,0);
+ 		//_delay_ms(4700);
+ 		
+	//	 ProfiServo(7,300,100);
+		// _delay_ms(2000);
+		 
+//     	ProfiServo_WheelMode(6,spusta);
+//     	//sendMsg("LOGIKA",&USARTD1);
+//     	_delay_ms(4500);
+//     	//ProfiServo(4,100,300);
+//     	//_delay_ms(2000);
+//     	ProfiServo_WheelMode_STOP(6);
+//  		_delay_ms(2000);
+//  		//ProfiServo(4,180,300);
+//  		ProfiServo_WheelMode(6,podize);
+// 		_delay_ms(2700);
+// 		ProfiServo_WheelMode_STOP(6);
+// 		_delay_ms(10000);
+// 		ProfiServo_WheelMode(6,spusta);
+// 		_delay_ms(2000);
+// 		ProfiServo_WheelMode_STOP(6);
+// 		ProfiServo(4,180,300);
+// 		_delay_ms(1000);
+// 		ProfiServo(4,100,300);
+// 		_delay_ms(1000);
+// 		ProfiServo_WheelMode(6,podize);
+// 		_delay_ms(5500);
+// 		ProfiServo_WheelMode_STOP(6);
+// 		_delay_ms(2000);
+ 	//}
 	while(1){
 		
 		if (vreme_primanja > 100){
 			vreme_primanja = 0;
 			RX_i_E1 = 0;
 		}
-		if (senzor_tajmer>150)
-		{
-			senzor_stop();
-			senzor_tajmer=0;
-		}
+ 		if (senzor_tajmer>150)
+ 		{
+	 		senzor_stop();
+	 		senzor_tajmer=0;
+ 		}
 		//TAKTIKE
 		taktika_kocka();
+		
 	}
 }//main
 

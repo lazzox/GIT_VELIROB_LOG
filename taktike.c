@@ -13,8 +13,8 @@
 #include "Headers/globals.h" 
 #include "Headers/usart_driver.h"
 
-#define senzor_prednji (PORTJ.IN & 0b00000101) //maske za oba prednja senzora
-#define senzor_zadnji  (PORTJ.IN & 0b00010000) // maska za zadnji senzor
+//#define senzor_prednji (PORTJ.IN & 0b00000101) //maske za oba prednja senzora
+//#define senzor_zadnji  (PORTJ.IN & 0b00010000) // maska za zadnji senzor
 
 #define START 0xFF
 #define INSTR_WRITE 0x03
@@ -25,8 +25,7 @@ unsigned char profiServoKomande[15];
 
 #define senzor_maska_prednji 0b00000101
 #define senzor_maska_zadnji  0b00010000
-#define senzor_prednji (PORTJ.IN & senzor_maska_prednji)
-#define senzor_zadnji (PORTJ.IN &  senzor_maska_zadnji)
+#define sensor_det (PORTJ.IN & sensor_dir)
 
 void postavi_sistem(long x, long y, long ugao)
 {
@@ -336,18 +335,23 @@ void iskljuci_senzore(){
 
 void senzor_stop(void)
 {
-	
-	if(sensor_dir & sensor_enable)
+	//sendMsg("CLEAN", &USART_LCD);
+	if( sensor_det & sensor_enable)
 	{//Ako udje neki od senzora je detektovao
+	
 		for (int i=0;i<11;i++)
 		{
-			if(sensor_dir)
+			if(sensor_det)
 			flag_senzor++;
 		}
 		
 	}
+	else{
+		sendMsg("CLEAN", &USART_LCD);
+	}
 	if(flag_senzor>9)
 	{
+		sendMsg("DETEKCIJA", &USART_LCD);
 		stigao_flag_pomocni=1;
 		SendChar('S',&USART_XDRIVE);
 		SendChar('A',&USART_XDRIVE);
@@ -411,23 +415,72 @@ void taktika_kocka(void){
 			case 0:
 				//brzina(250);
 				ukljuci_senzore();
-				idi_pravo(1100,0,0);
+				idi_pravo(400,0,0);
 				if (korak2 == 3)
 				{
 					korak++;
 					korak2 = 0;
+					sys_time=0;
 				}
 			break;
 			
 			case 1:
-				idi_nazad(0,0,0);
+			if (sys_time>1500)
+			{
+				rotiraj(90);
 				if (korak2 == 3)
 				{
 					korak++;
 					korak2 = 0;
+					sys_time-0;
 					
 				}
+			}
 			break;
+			
+			case 2:
+			if (sys_time>1500)
+			{
+				rotiraj(180);
+				if (korak2 == 3)
+				{
+					korak++;
+					korak2 = 0;
+					sys_time-0;
+					
+				}
+			}
+			break;
+			
+			case 3:
+			if (sys_time>1500)
+			{
+				rotiraj(270);
+				if (korak2 == 3)
+				{
+					korak++;
+					korak2 = 0;
+					sys_time-0;
+					
+				}
+			}
+			break;
+			
+				case 4:
+				if (sys_time>1500)
+				{
+					rotiraj(0);
+					if (korak2 == 3)
+					{
+						korak=1;
+						korak2 = 0;
+						sys_time-0;
+						
+					}
+				}
+				break;
+			
+			
 			
 			//case 2:
 				//idi_pravo(0,500,0);

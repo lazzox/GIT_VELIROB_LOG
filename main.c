@@ -5,11 +5,12 @@
  * Autor: AXIS team 
  
  Izmene:
-
+	-Dodate funkcije za AX12 nove
+	-Prebacena logika sa malog robota
  
  
  Potrebne izmene:
-Sve
+ 
  */ 
 
 #include <avr/io.h>
@@ -19,11 +20,12 @@ Sve
 #include "Headers/globals.h"
 #include "Headers/hardware.h"
 #include "Headers/taktike.h"
- 
+#define spusta 0
+#define podize 1
 
 int main(void)
 {
-	PORTE.OUT = 0x01; //Za profi servo
+	//PORTE.OUT = 0x01; //Za profi servo
 	tajmer=0;
 	senzor_tajmer=0;
 	vreme_primanja = 0;
@@ -60,10 +62,18 @@ int main(void)
 		//230 odvaja
 		//300
 		
-		ProfiServo(6,190,300);
-		sendMsg("LOGIKA",&USARTD1);
+		//ProfiServo(6,0,300);
+		//ProfiServo_WheelMode(6,0);
+		//_delay_ms(4700);
+		//ProfiServo(6,150,300);
+		ProfiServo_WheelMode(6,spusta);
+		//sendMsg("LOGIKA",&USARTD1);
+		//_delay_ms(4100);
+		ProfiServo(4,100,300);
+		//_delay_ms(2000);
+		//ProfiServo_WheelMode_STOP(6);
 		_delay_ms(2000);
-		ProfiServo(6,20,300);
+		ProfiServo(4,180,300);
 		_delay_ms(2000);
 	}
 	while(1){

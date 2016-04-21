@@ -257,20 +257,16 @@ okay_flag,
 stigao_flag,
 stigao_flag2,
 stigao_flag_pomocni,
-flag_senzor,
 RX_i_E0,
 RX_i_E1,
 RX_i_C0;
 
-volatile unsigned int 
+volatile unsigned int
 vreme_primanja,
 overflow_primanje,
 sys_time,
 tajmer,
-TIMED_OUT_VREME,
-senzor_tajmer,
-korak,
-korak2;
+TIMED_OUT_VREME;
 
 
 void SendChar(char c, USART_t * USART);

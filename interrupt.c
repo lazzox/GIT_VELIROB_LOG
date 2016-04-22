@@ -14,6 +14,13 @@
 
 
 
+ISR(TCF0_CCA_vect){
+	PORTK.OUT &= 0x00;
+}
+
+ISR(TCF0_OVF_vect){
+	PORTK.OUT |= 0xFF;
+}
 
 //interrupt tajmera
 ISR(TCE1_OVF_vect)	//1.5ms 

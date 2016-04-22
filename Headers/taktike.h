@@ -8,7 +8,8 @@
 #ifndef TAKTIKE_H_
 #define TAKTIKE_H_
 
-
+void inicijalizuj_servo_tajmer_20ms();
+void pomeri_servo_1(uint16_t deg);
 
 void idi_pravo(signed int x, signed int y, signed int ugao);
 void idi_nazad(signed int x, signed int y, signed int ugao);

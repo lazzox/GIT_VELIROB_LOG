@@ -148,6 +148,16 @@ void Podesi_Tajmere(void)
 	TC1_SetOverflowIntLevel( &TCE1, TC_OVFINTLVL_MED_gc );
 	/* Start Timer/Counter. */
 	TC1_ConfigClockSource( &TCE1, TC_CLKSEL_DIV256_gc );
+	
+	
+	//Tajmer za servo - TCF0 - Radi tajmer!
+	TC_SetPeriod( &TCF0, 0x09C4);
+	TC0_SetOverflowIntLevel(&TCF0, TC_OVFINTLVL_LO_gc);
+	TC0_SetCCAIntLevel(&TCF0, TC_OVFINTLVL_LO_gc);
+	TC0_ConfigClockSource( &TCF0, TC_CLKSEL_DIV64_gc );
+	
+	
+	
 }
 
 void Podesi_Pinove(void)
@@ -215,9 +225,7 @@ void Podesi_Pinove(void)
 	PORT_ClearPins(&PORTF, 0xFF);
 	
 	//PORTK - digitalni izlazi
-	PORT_SetPinsAsOutput(&PORTK,0b11111111);
-	//PORT_SetPinsAsOutput(&PORTK,0b00100000);
-	//PORTK.PIN6CTRL=0b00111001;
+	PORT_SetPinsAsOutput(&PORTK,0xFF);
  	PORT_ConfigurePins(&PORTK,
  						0xFF,
  						0,

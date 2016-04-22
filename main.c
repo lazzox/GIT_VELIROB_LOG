@@ -72,6 +72,20 @@ int main(void)
 	
 	_delay_ms(2000);
 	PORTE.OUT |= 0x01; //Za service
+	//pomeri_servo_1(90);
+	////OBICAN SERVO
+	//while(1)
+	//{
+		//pomeri_servo_1(60);
+		//_delay_ms(2000);
+		//pomeri_servo_1(250);
+		//_delay_ms(2000);
+		////PORTK.OUT |= 0xFF;
+		////_delay_ms(2);
+		////PORTK.OUT &= 0x00;
+		////_delay_ms(19);
+//
+	//}
 
 	//ProfiServo(br. servoa, ugao, brzina) - ugao: 100 - 300; brzina: 100-600
  	while(1){ //ZAKOMENTARISI OVAJ WHILE - KORISTIMO SAMO ZA AX12 TESTIRANJE

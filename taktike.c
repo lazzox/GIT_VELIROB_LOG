@@ -27,6 +27,30 @@ unsigned char profiServoKomande[15];
 #define senzor_maska_zadnji  0b00010000
 #define sensor_det (PORTJ.IN & sensor_dir)
 
+
+
+
+void inicijalizuj_servo_tajmer_20ms()
+{
+	//Clock source = 32/4 MHz = 8 MHz
+	TCF0.CTRLA |= (1 << 2 | 1 << 0);						//Set presclaer to 64, PER 2500 = 20 ms
+	TCF0.CTRLB |= (0x0F << 4 | 0x03 << 0);					//Enable Capture/compare A,B,C,D and select single slope PWM
+	TCF0.INTCTRLA |= (1 << 0);								//Enable low level overflow interrupt
+	TCF0.INTCTRLB |= (1 << 0 | 1 << 2 | 1 << 4 | 1 << 6);	//Enable Capture/compare low level interrupts
+	TCF0.PER = 2500;
+}
+
+void pomeri_servo_1(uint16_t deg)
+{
+	uint16_t res = (uint16_t)(deg*(312/180));	//250 cycles for 180 degree turn
+	if(res <= 62)
+		res = 62;								//125 cycles for 0 degree turn
+	else if(res > 312)
+		res = 312;
+	TCF0.CCA = res;
+	
+}
+
 void postavi_sistem(long x, long y, long ugao)
 {
 	switch(korak2){

@@ -49,9 +49,12 @@ adresa_niz_3;
 extern volatile unsigned int
 vreme_primanja,
 overflow_primanje,
+overflow_funny,
+kur,
 sys_time,
 tajmer,
 senzor_tajmer,
+funny_action_timer,
 TIMED_OUT_VREME,
 korak,
 korak2;

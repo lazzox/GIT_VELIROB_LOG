@@ -15,6 +15,7 @@
 
 //#define senzor_prednji (PORTJ.IN & 0b00000101) //maske za oba prednja senzora
 //#define senzor_zadnji  (PORTJ.IN & 0b00010000) // maska za zadnji senzor
+//zadnji desni J7, zadnji levi J3, prednji desni J0, prednji J2
 
 #define START 0xFF
 #define INSTR_WRITE 0x03
@@ -24,32 +25,9 @@
 unsigned char profiServoKomande[15];
 
 #define senzor_maska_prednji 0b00000101
-#define senzor_maska_zadnji  0b00010000
+#define senzor_maska_zadnji  0b10001000
 #define sensor_det (PORTJ.IN & sensor_dir)
 
-
-
-
-void inicijalizuj_servo_tajmer_20ms()
-{
-	//Clock source = 32/4 MHz = 8 MHz
-	TCF0.CTRLA |= (1 << 2 | 1 << 0);						//Set presclaer to 64, PER 2500 = 20 ms
-	TCF0.CTRLB |= (0x0F << 4 | 0x03 << 0);					//Enable Capture/compare A,B,C,D and select single slope PWM
-	TCF0.INTCTRLA |= (1 << 0);								//Enable low level overflow interrupt
-	TCF0.INTCTRLB |= (1 << 0 | 1 << 2 | 1 << 4 | 1 << 6);	//Enable Capture/compare low level interrupts
-	TCF0.PER = 2500;
-}
-
-void pomeri_servo_1(uint16_t deg)
-{
-	uint16_t res = (uint16_t)(deg*(312/180));	//250 cycles for 180 degree turn
-	if(res <= 62)
-		res = 62;								//125 cycles for 0 degree turn
-	else if(res > 312)
-		res = 312;
-	TCF0.CCA = res;
-	
-}
 
 void postavi_sistem(long x, long y, long ugao)
 {
@@ -86,6 +64,42 @@ void postavi_sistem(long x, long y, long ugao)
 		
 		default:
 		break;
+	}
+}
+
+
+void kraj_meca (void)
+{
+	switch(kur){
+		
+		case 0:
+		SendChar('K',&USART_XDRIVE);
+		SendChar('c',&USART_XDRIVE);
+		SendChar('c',&USART_XDRIVE);
+		SendChar('c',&USART_XDRIVE);
+		SendChar('c',&USART_XDRIVE);
+		SendChar('c',&USART_XDRIVE);
+		SendChar('c',&USART_XDRIVE);
+		SendChar('M',&USART_XDRIVE);
+		kur++;
+		overflow_funny=0;
+		break;
+		
+		case 1:
+		if(okay_flag){
+			okay_flag = 0;
+			overflow_funny = 0;
+		}
+		else if(overflow_funny > 200)
+		{
+			overflow_funny = 0;
+			kur = 0;
+		}
+		
+		break;
+		
+		
+		
 	}
 }
 
@@ -436,74 +450,111 @@ void taktika_kocka(void){
 		
 		switch (korak)
 		{
+			
 			case 0:
+			if (sys_time>8500)
+			{
 				//brzina(250);
+				//ukljuci_senzore();
 				ukljuci_senzore();
-				idi_pravo(400,0,0);
+				idi_pravo(400,0,90);
 				if (korak2 == 3)
 				{
-					korak++;
+					korak=22;
 					korak2 = 0;
 					sys_time=0;
 				}
+			}
 			break;
-			
-			case 1:
+
+			case 22:
+			//brzina(250);
+			//ukljuci_senzore()
+			//iskljuci_senzore();
+			idi_nazad(400,-536,90);
+			if (korak2 == 3)
+			{
+				korak=4;
+				korak2 = 0;
+				sys_time=0;
+			}
+		
+		break;
+				
+			case 4:
 			if (sys_time>1500)
 			{
-				rotiraj(90);
+				//brzina(250);
+				ukljuci_senzore();
+				idi_pravo(400,300,90);
 				if (korak2 == 3)
 				{
-					korak++;
+					korak=9999;
 					korak2 = 0;
-					sys_time-0;
-					
+					sys_time=0;
 				}
 			}
 			break;
+				
 			
-			case 2:
-			if (sys_time>1500)
-			{
-				rotiraj(180);
-				if (korak2 == 3)
-				{
-					korak++;
-					korak2 = 0;
-					sys_time-0;
-					
-				}
-			}
-			break;
 			
-			case 3:
-			if (sys_time>1500)
-			{
-				rotiraj(270);
-				if (korak2 == 3)
-				{
-					korak++;
-					korak2 = 0;
-					sys_time-0;
-					
-				}
-			}
-			break;
 			
-				case 4:
-				if (sys_time>1500)
-				{
-					rotiraj(0);
-					if (korak2 == 3)
-					{
-						korak=1;
-						korak2 = 0;
-						sys_time-0;
-						
-					}
-				}
-				break;
+// 			case 1:
+// 			//if (sys_time>1500)
+// 			//{
+// 				rotiraj(90);
+// 				if (korak2 == 3)
+// 				{
+// 					korak++;
+// 					korak2 = 0;
+// 					sys_time-0;
+// 					
+// 				}
+// 			//}
+// 			break;
 			
+// 			case 2:
+// 			//if (sys_time>1500)
+// 			//{
+// 				rotiraj(180);
+// 				if (korak2 == 3)
+// 				{
+// 					korak++;
+// 					korak2 = 0;
+// 					sys_time-0;
+// 					
+// 				}
+// 			//}
+// 			break;
+// 			
+// 			case 3:
+// 			if (sys_time>1500)
+// 			{
+// 				rotiraj(270);
+// 				if (korak2 == 3)
+// 				{
+// 					korak++;
+// 					korak2 = 0;
+// 					sys_time-0;
+// 					
+// 				}
+// 			}
+// 			break;
+// 			
+// 				case 4:
+// 				if (sys_time>1500)
+// 				{
+// 					rotiraj(0);
+// 					if (korak2 == 3)
+// 					{
+// 						korak=1;
+// 						korak2 = 0;
+// 						sys_time-0;
+// 						
+// 					}
+// 				}
+// 				break;
+// 			
 			
 			
 			//case 2:
@@ -596,6 +647,42 @@ void taktika_1(void)
 	
 }
 
+void taktika_lazar(void){
+	
+	switch (korak)
+	{
+		case 0:
+		//brzina(250);
+		sendMsg("IDI PRAVO", &USART_LCD);
+		idi_pravo(550,0,0);
+		if (korak2 == 3)
+		{
+			sendMsg("Tacka 2", &USART_LCD);
+			korak ++;
+			korak2 = 0;
+		}
+		break;
+		
+		case 1:
+			idi_pravo(0,0,0);
+		if (korak2==3)
+		{
+			korak++;
+			korak2=0;
+		}
+		break;
+		
+		case 2:
+			inicijalizuj_servo_tajmer_20ms();
+			pomeri_servo_1(300);
+			korak++;
+			korak2=0;
+		break;
+	default:
+		break;
+	}
+	
+}
 
 void ProfiServo(unsigned char iddP, int ugaoP, int brzinaP)
 {

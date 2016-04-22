@@ -148,17 +148,37 @@ void Podesi_Tajmere(void)
 	TC1_SetOverflowIntLevel( &TCE1, TC_OVFINTLVL_MED_gc );
 	/* Start Timer/Counter. */
 	TC1_ConfigClockSource( &TCE1, TC_CLKSEL_DIV256_gc );
-	
-	
+}
+
+void inicijalizuj_servo_tajmer_20ms()
+{//NOVA FUNKCIJA
+	cli();
 	//Tajmer za servo - TCF0 - Radi tajmer!
 	TC_SetPeriod( &TCF0, 0x09C4);
 	TC0_SetOverflowIntLevel(&TCF0, TC_OVFINTLVL_LO_gc);
 	TC0_SetCCAIntLevel(&TCF0, TC_OVFINTLVL_LO_gc);
 	TC0_ConfigClockSource( &TCF0, TC_CLKSEL_DIV64_gc );
-	
-	
-	
+	sei();
 }
+
+void pomeri_servo_1(uint16_t deg)
+{
+	uint16_t res = (uint16_t)(deg*(312/180));	//250 cycles for 180 degree turn
+	if(res <= 62)
+	res = 62;								//125 cycles for 0 degree turn
+	else if(res > 312)
+	res = 312;
+	TCF0.CCA = res;
+}
+//void pomeri_servo_1(uint16_t deg)
+//{
+	//uint16_t res = (uint16_t)(deg*(250/180));	//250 cycles for 180 degree turn
+	//if(res <= 0)
+	//res = 125;								//125 cycles for 0 degree turn
+	//else if(res > 250)
+	//res = 250;
+	//TCF0.CCA = res;
+//}
 
 void Podesi_Pinove(void)
 {
@@ -203,7 +223,8 @@ void Podesi_Pinove(void)
 						PORT_OPC_TOTEM_gc,
 						PORT_ISC_INPUT_DISABLE_gc);
 	PORT_ClearPins(&PORTD, 0xFF);
-
+	
+	//PORTE - digitalni izlazi dfgh
 	PORT_SetPinsAsOutput(&PORTE,0x03);
 	PORT_ConfigurePins(&PORTE,
 						0x03,
@@ -250,7 +271,7 @@ void Podesi_Pinove(void)
 						0,
 						0,
 						PORT_OPC_PULLUP_gc,
-	PORT_ISC_RISING_gc);
+						PORT_ISC_RISING_gc);
 	//
 	//PORT_SetPinsAsInput( &PORTB, 0xFF );
 	//PORT_ConfigurePins( &PORTB,

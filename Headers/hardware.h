@@ -15,7 +15,7 @@ void Podesi_USART_Komunikaciju(void);
 void Podesi_Tajmere(void);
 void Podesi_Pinove(void);
 void Resetuj_USART();
-
-
+void inicijalizuj_servo_tajmer_20ms();
+void pomeri_servo_1(uint16_t deg);
 
 #endif /* HARDWARE_H_ */

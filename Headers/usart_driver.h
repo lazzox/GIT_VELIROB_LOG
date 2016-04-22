@@ -266,6 +266,8 @@ RX_i_C0;
 volatile unsigned int
 vreme_primanja,
 overflow_primanje,
+overflow_funny,
+kur,
 sys_time,
 tajmer,
 TIMED_OUT_VREME;

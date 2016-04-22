@@ -16,6 +16,7 @@ void idi_nazad(signed int x, signed int y, signed int ugao);
 void senzor_stop(void);
 void rotiraj(int ugao_rotacije);
 
+void kraj_meca(void);
 void brzina(unsigned int brzinaa);
 void postavi_sistem(long x, long y, long ugao);
 
@@ -26,7 +27,7 @@ void ProfiServo(unsigned char iddP, int ugaoP, int brzinaP);
 void ProfiServo_WheelMode(unsigned char iddP, int smer_rotacije);
 void ProfiServo_WheelMode_STOP(unsigned char iddP);
 
-
+void taktika_lazar(void);
 void taktika_kocka(void);
 void taktika_1(void);
 
@@ -41,6 +42,7 @@ senzor_enable_zadnji;
 volatile unsigned int
 senzor_tajmer,
 korak,
+funny_action_timer,
 korak2;
 
 
